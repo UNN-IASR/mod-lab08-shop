@@ -7,6 +7,8 @@ set(src task.cpp)
 add_library(${PROJECT_NAME} SHARED
   ${header}
   ${src})
+
+  
 target_include_directories(${PROJECT_NAME}
   PUBLIC ${CMAKE_CURRENT_BINARY_DIR}
          ${${PROJECT_NAME}_SOURCE_DIR}/include)
