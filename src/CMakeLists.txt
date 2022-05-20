@@ -1,6 +1,6 @@
 set(header_path "${${PROJECT_NAME}_SOURCE_DIR}/include")
-set(header ${header_path}/task.h)
-set(src task.cpp)
+set(header ${header_path}/market.h)
+set(src market.cpp)
 
 
 
