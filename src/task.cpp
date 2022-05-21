@@ -16,11 +16,11 @@ Client::Client(int avgItems, int i) {
     id = i;
 }
 
-void Client::Qin() {
+void Client::inQueue() {
     timestart = std::chrono::system_clock::now();
 }
 
-void Client::Qout() {
+void Client::outQueue() {
     tQueue = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - timestart).count();
 }
 
@@ -57,7 +57,7 @@ void Shop::Start(int index) {
         m.lock();
 
         if (queueClients.size() > 0) {
-            queueClients.at(0)->Qout();
+            queueClients.at(0)->outQueue();
 
             int basket = queueClients.at(0)->Products;
             int id = queueClients.at(0)->id;
@@ -69,7 +69,7 @@ void Shop::Start(int index) {
 
             m.unlock();
             while (basket > 0) {
-                
+
                 std::this_thread::sleep_for(std::chrono::milliseconds(speed));
                 basket -= 1;
             }
@@ -82,7 +82,7 @@ void Shop::Start(int index) {
     }
 }
 
-void Shop::Work() {
+void Shop::Shopping() {
     srand(time(0));
 
     int countClients = 0;
@@ -104,12 +104,10 @@ void Shop::Work() {
         if (queueClients.size() < maxQueue)
         {
             queueClients.push_back(&clients.at(countClients));
-            clients.at(countClients).Qin();
+            clients.at(countClients).inQueue();
             m.unlock();
         } else {
             rejectedClients++;
-            std::cout << "Klient nomer " << clients.at(countClients).id << " ne obsluzhen" << std::endl;
-
             m.unlock();
         }
         countClients++;
@@ -163,7 +161,7 @@ void Shop::Work() {
     double A = la * Q;
     std::cout << "p = " << std::to_string(p) << std::endl;
     std::cout << "P0 = " << std::to_string(P0) << std::endl;
-   
+
 
     std::cout << "Refusual: " << std::to_string(P) << std::endl;
     std::cout << " Relative Throughput: " << std::to_string(Q) << std::endl;
