@@ -21,9 +21,7 @@ TEST(task3, test3) {
 	Shop shop(0, 60, 400, 3, 6);
 	shop.Work();
 	int result = 0;
-	if (shop.servedClients > 0)
+	if (shop.servedClients = 0)
 		result = 1;
-  else 
-    return 0;
-	EXPECT_EQ(0, result);
+	EXPECT_EQ(1, result);
 }
