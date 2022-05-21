@@ -18,8 +18,8 @@ public:
 
 	Client(int a, int i);
 	void outCashbox(int t);
-	void Qin();
-	void Qout();
+	void inQueue();
+	void outQueue();
 };
 class Shop {
 public:
@@ -44,5 +44,5 @@ public:
 
 	Shop(int M, int r, int s, int a, int c);
 	void Start(int ind);
-	void Work();
+	void Shopping();
 };
