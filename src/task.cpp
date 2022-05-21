@@ -1,3 +1,4 @@
+// Copyright 2022 UNN-IASR
 #include "task.h"
 #include <iostream>
 
@@ -15,11 +16,11 @@ Client::Client(int avgItems, int i) {
     id = i;
 }
 
-void Client::inQueue() {
+void Client::Qin() {
     timestart = std::chrono::system_clock::now();
 }
 
-void Client::outQueue() {
+void Client::Qout() {
     tQueue = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - timestart).count();
 }
 
@@ -56,7 +57,7 @@ void Shop::Start(int index) {
         m.lock();
 
         if (queueClients.size() > 0) {
-            queueClients.at(0)->outQueue();
+            queueClients.at(0)->Qout();
 
             int basket = queueClients.at(0)->Products;
             int id = queueClients.at(0)->id;
@@ -81,7 +82,7 @@ void Shop::Start(int index) {
     }
 }
 
-void Shop::Shopping() {
+void Shop::Work() {
     srand(time(0));
 
     int countClients = 0;
@@ -103,7 +104,7 @@ void Shop::Shopping() {
         if (queueClients.size() < maxQueue)
         {
             queueClients.push_back(&clients.at(countClients));
-            clients.at(countClients).inQueue();
+            clients.at(countClients).Qin();
             m.unlock();
         } else {
             rejectedClients++;
