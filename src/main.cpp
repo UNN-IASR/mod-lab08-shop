@@ -3,7 +3,7 @@
 #include "task.h"
 
 int main() {
-    Shop shop(2, 15, 100, 5, 2);
-    shop.Work();
+    Shop shop(1, 10, 100, 1, 1);
+    shop.Shopping();
     int s = shop.servedClients + shop.rejectedClients;
 }
