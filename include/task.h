@@ -1,3 +1,4 @@
+// Copyright 2022 UNN-IASR
 #pragma once
 #include <vector>
 #include <string>
@@ -17,8 +18,8 @@ public:
 
 	Client(int a, int i);
 	void outCashbox(int t);
-	void inQueue();
-	void outQueue();
+	void Qin();
+	void Qout();
 };
 class Shop {
 public:
@@ -43,5 +44,5 @@ public:
 
 	Shop(int M, int r, int s, int a, int c);
 	void Start(int ind);
-	void Shopping();
+	void Work();
 };
