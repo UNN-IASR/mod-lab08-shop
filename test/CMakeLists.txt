@@ -3,7 +3,7 @@ add_executable(${PROJECT_NAME}.test
   tests.cpp)
 
 target_link_libraries(${PROJECT_NAME}.test
-  ${PROJECT_NAME}_1 ${PROJECT_NAME}_2 ${PROJECT_NAME}_3 gtest pthread)
+  ${PROJECT_NAME} gtest pthread)
 target_compile_definitions(${PROJECT_NAME}.test 
   PRIVATE TEST_DIR="${CMAKE_CURRENT_LIST_DIR}/test")
 
