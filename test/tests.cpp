@@ -76,5 +76,5 @@ TEST(TEST5, serviceTime) {
 
   double time = (averageNumberOfProducts + 10) * processingSpeed;
 
-  ASSERT_TRUE(supermarket->getServiceTime() < time);
+  ASSERT_TRUE(supermarket->getAverageTimeOfWaiting() < time);
 }
