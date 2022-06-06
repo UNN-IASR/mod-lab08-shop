@@ -29,6 +29,10 @@ int Supermarket::getServedCustomers() {
     return servedCustomers;
 }
 
+int Supermarket::getNotServedCustomers() {
+    return countBuyers - servedCustomers;
+}
+
 double Supermarket::getAverageQueueLength() {
     return averageQueueLength;
 }
