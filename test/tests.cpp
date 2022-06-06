@@ -2,22 +2,7 @@
 #include <gtest/gtest.h>
 #include "task.h"
 
-TEST(TEST1, servedCustomers) {
-
-  int cashRegisterAmount = 2;
-  int flowRate = 500;
-  int processingSpeed = 1000;
-  int averageNumberOfProducts = 8;
-  int maxQueueLength = 6;
-  int maxBuyers = 10;
-
-  Supermarket* supermarket = new Supermarket(cashRegisterAmount, flowRate, processingSpeed, averageNumberOfProducts, maxQueueLength, maxBuyers);
-  supermarket->run();
-
-  ASSERT_TRUE(supermarket->getServedCustomers() > cashRegisterAmount);
-}
-
-TEST(TEST2, notServedCustomers) {
+TEST(TEST1, notServedCustomers) {
 
   int cashRegisterAmount = 2;
   int flowRate = 500;
@@ -32,7 +17,7 @@ TEST(TEST2, notServedCustomers) {
   ASSERT_EQ(supermarket->getNotServedCustomers(),0);
 }
 
-TEST(TEST3, notServedCustomers) {
+TEST(TEST2, notServedCustomers) {
 
   int cashRegisterAmount = 2;
   int flowRate = 500;
@@ -47,7 +32,7 @@ TEST(TEST3, notServedCustomers) {
   ASSERT_EQ(supermarket->getNotServedCustomers(), 2);
 }
 
-TEST(TEST4, refuseProbability) {
+TEST(TEST3, refuseProbability) {
 
   int cashRegisterAmount = 2;
   int flowRate = 500;
@@ -62,7 +47,7 @@ TEST(TEST4, refuseProbability) {
   ASSERT_TRUE(supermarket->refuseProbability() < 0.5);
 }
 
-TEST(TEST5, serviceTime) {
+TEST(TEST4, serviceTime) {
 
   int cashRegisterAmount = 2;
   int flowRate = 500;
