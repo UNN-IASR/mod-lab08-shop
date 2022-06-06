@@ -25,40 +25,10 @@ Buyer* Supermarket::createBuyer(int number) {
     return new Buyer(check, number);
 }
 
-int Supermarket::getServedCustomers() {
-    return servedCustomers;
-}
-
-int Supermarket::getNotServedCustomers() {
-    return countBuyers - servedCustomers;
-}
-
-double Supermarket::getAverageQueueLength() {
-    return averageQueueLength;
-}
-
-double Supermarket::getAverageTimeOfWaiting() {
-    double result = 0;
-    for (int i = 1; i <= averageQueueLength; i++) {
-        result += i * static_cast<double>(averageNumberOfProducts * processingSpeed);
-    }
-    return result / averageQueueLength;
-}
-
-double Supermarket::getAverageCashRegisterWorkingTime() {
-    return averageCashRegisterWorkingTime;
-}
-double Supermarket::getAverageCashRegisterNotWorkingTime() {
-    return averageCashRegisterNotWorkingTime;
-}
-double Supermarket::refuseProbability() {
-    return (refuseCount / countBuyers);
-}
-
 void Supermarket::run() {
     serveSupermarket();
-    for (auto currentQueue : threads) {
-        currentQueue->join();
+    for (auto currQueue : threads) {
+        currQueue->join();
     }
 }
 
@@ -74,35 +44,28 @@ void Supermarket::serveBuyer(Buyer* _buyer, int _number) {
         averageCashRegisterNotWorkingTime += processingSpeed / (cashRegisterAmount - workingCashRegisterCount);
     }
     servedCustomers++;
+
 }
 
-void Supermarket::serveQueue(std::queue<Buyer*>* _buyers) {
-    int number = 1;
+void Supermarket::serveQueue(std::queue <Buyer*>* _buyers) {
+    //int number = 1;
     auto buyer = _buyers->front();
     _buyers->pop();
     serveBuyer(buyer, buyer->number);
+
     while (!buyerQueue.empty()) {
-        int countElements = 0;
-        int iteration = 0;
-        std::queue<int>* cameBefore = new std::queue<int>();
-        while (!_buyers->empty()) {
-            auto buyer = _buyers->front();
-            serveBuyer(buyer, number);
-            _buyers->pop();
-            countElements++;
-            number++;
-            iteration++;
-            std::unique_lock<std::mutex> unqLock(myMutex);
-            unqLock.unlock();
-            _buyers->pop();
-            serveBuyer(buyer, buyer->number);
-        }
+        std::unique_lock<std::mutex> unqLock(myMutex);
+        _buyers->push(buyerQueue.front());
+        buyerQueue.pop();
+        unqLock.unlock();
+
+        auto buyer = _buyers->front();
+        _buyers->pop();
+        serveBuyer(buyer, buyer->number);
     }
 }
 
 void Supermarket::serveSupermarket() {
-    srand(time(nullptr));
-    int countOfActive = 0;
     for (int i = 0; i < maxBuyers; i++) {
         countBuyers++;
         if (workingCashRegisterCount <= cashRegisterAmount) {
@@ -111,7 +74,9 @@ void Supermarket::serveSupermarket() {
             cashRegisterQueues.push_back(ptrQ);
             threads.push_back(new std::thread(&Supermarket::serveQueue, this, ptrQ));
             workingCashRegisterCount++;
-        } else if (buyerQueue.size() < maxQueueLength) {
+        }
+
+        else if (buyerQueue.size() < maxQueueLength) {
             buyerQueue.push(createBuyer(countBuyers));
         }
 
@@ -123,4 +88,55 @@ void Supermarket::serveSupermarket() {
     averageCashRegisterNotWorkingTime = averageCashRegisterNotWorkingTime / countBuyers;
 
     serviceTime = serviceTime / countBuyers;
+}
+
+int Supermarket::getServedCustomers() {
+    return servedCustomers;
+}
+int Supermarket::getNotServedCustomers() {
+    return countBuyers - servedCustomers;
+}
+double Supermarket::getAverageQueueLength() {
+    return averageQueueLength;
+}
+double Supermarket::getAverageTimeOfWaiting() {
+    return serviceTime;
+}
+double Supermarket::getAverageCashRegisterWorkingTime() {
+    return averageCashRegisterWorkingTime;
+}
+double Supermarket::getAverageCashRegisterNotWorkingTime() {
+    return averageCashRegisterNotWorkingTime;
+}
+double Supermarket::refuseProbability() {
+    return (refuseCount / countBuyers);
+
+
+    double p = static_cast<double>(flowRate) / (processingSpeed);
+
+    double P0 = 1.0;
+    for (int i = 1; i <= cashRegisterAmount; i++) {
+        P0 = P0 + pow(p, i) / factorial(i);
+    }
+
+    for (int i = cashRegisterAmount + 1; i < cashRegisterAmount + maxQueueLength; i++) {
+        P0 = P0 + pow(p, i) / (factorial(cashRegisterAmount) * pow(cashRegisterAmount, i - cashRegisterAmount));
+    }
+
+    P0 = 1.0 / P0;
+
+    double Prej = P0 * pow(p, (cashRegisterAmount + maxQueueLength)) / static_cast<double>(pow(cashRegisterAmount, maxQueueLength) * factorial(cashRegisterAmount));
+    return Prej;
+}
+double Supermarket::relativeBandwidth() {
+    return 1 - refuseProbability();
+}
+double Supermarket::absoluteBandwidth() {
+    return relativeBandwidth() * processingSpeed;
+}
+
+double Supermarket::factorial(double i)
+{
+    if (i == 0) return 1;
+    else return i * factorial(i - 1);
 }
