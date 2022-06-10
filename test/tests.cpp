@@ -23,7 +23,7 @@ TEST(TEST2, 2) {
     int maxLen = 2;
     Market m(cassNum, maxNumClients, intensClients, servSpeed, averItemNum, maxLen);
     m.start();
-    ASSERT_GT(m.getAmountOfUnservedClients(), 95);
+    ASSERT_GT(m.getAmountOfServedClients(), 5);
 }
 
 TEST(TEST3, 3) {
