@@ -4,7 +4,7 @@
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/UNN-IASR/mod-lab08-shop)
 ![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/UNN-IASR/mod-lab08-shop)
 
-Срок выполнения работы: **до 14 мая** ![Relative date](https://img.shields.io/date/1684098000)
+Срок выполнения работы: **до 21 мая** ![Relative date](https://img.shields.io/date/1684702800)
 
 
 ## Lab 08. Моделирование СМО: "магазин"
