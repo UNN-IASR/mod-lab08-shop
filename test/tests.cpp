@@ -1,5 +1,4 @@
 // Copyright 2021 GHA Test Team
 #include <gtest/gtest.h>
-#include "task1.h"
-#include "task2.h"
-#include "task3.h"
+#include "C:\Users\Alena\Desktop\Program\Modeling inform processing\8.Shop\mod-lab08-shop\include\task.h"
+
