@@ -1,6 +1,6 @@
 // Copyright 2024 alenkaLo
 #include <gtest/gtest.h>
-#include "task.h"
+#include "../include/task.h"
 
 TEST(TestCaseName, Test1) {
     Shop shop(5, 20, 0,1, 10, 5);
