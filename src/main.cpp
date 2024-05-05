@@ -1,21 +1,16 @@
 // Copyright 2024 alenkaLo
-#include "..\10_Shop\task.h"
+#include "task.h"
 #include <iostream>
 
 
 int main()
 {
     setlocale(LC_ALL, "Rus");
-    double numberRegisters = 3;
-    double intensity = 30;
-
-    //double speed = 0.05;
-    //double speed = 0.1;
+    double numberRegisters = 5;
+    double intensity = 20;
     double speed = 0.2;
-    //double speed = 0.4;
-
-    double avgProducts = 5;
-    double maxQueue = 10;
+    double avgProducts = 10;
+    double maxQueue = 5;
 
     Shop shop(numberRegisters, intensity, speed, avgProducts, maxQueue);
     shop.Work();
