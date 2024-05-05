@@ -1,4 +1,9 @@
-
+pool_size = 3
+queue_len = 7
+client_flow = 10 per sec
+cash_speed = 100 msec for item
+cart_size = 5
+clients_count = 1000
 
 expected ~1000 clients
 reject prob: 0.40276
@@ -28,3 +33,5 @@ avg cash worktime: 104.167
 avg cash idletime: 1.22033
 profit: 108191
 loss: 69558
+
+вывод: данные совпадают с небольшой погрешностью
