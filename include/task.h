@@ -6,6 +6,7 @@
 #include <chrono>
 #include <mutex>
 #include <cmath>
+#include <algorithm>
 
 using time_point = std::chrono::system_clock::time_point;
 
