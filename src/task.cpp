@@ -1,5 +1,5 @@
 // Copyright 2024 alenkaLo
-#include "task.h"
+#include "../include/task.h"
 
 #include <iostream>
 
