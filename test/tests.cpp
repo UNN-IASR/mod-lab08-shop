@@ -1,7 +1,7 @@
 // Copyright 2024 alenkaLo
 #include <gtest/gtest.h>
 #include "../include/task.h"
-#include "../src/task.cpp"
+//#include "../src/task.cpp"
 
 
 TEST(TestCaseName, Test1) {
