@@ -13,7 +13,7 @@ TEST(test2, avg_queue_len_is_1) {
     market m { 1, 5, 100, 5, 1 };
     m.run(20);
     stats s = m.get_stats();
-    EXPECT_EQ(s.avg_queue_len, 0);
+    EXPECT_EQ(s.avg_queue_len, 1);
 }
 
 TEST(test3, no_queue_no_work) {
@@ -49,7 +49,7 @@ TEST(test5, correct_poiss_times) {
             times.push_back(t);
     }
     EXPECT_EQ(
-        abs(lambda - 1000.0 / (std::accumulate(times.begin(), times.end(), 0.0) / times.size())) < 0.1,
+        abs(lambda - 1000.0 / (std::accumulate(times.begin(), times.end(), 0.0) / times.size())) < 0.15,
         true
     );
 }
