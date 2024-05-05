@@ -6,13 +6,13 @@ TEST(TestCaseName, Test1) {
     Shop shop(5, 20, 0.1, 10, 5);
     shop.Work();
     int result = shop.servedСustomers + shop.unservedCustomers;
-    EXPECT_EQ(result, countCash);
+    EXPECT_EQ(result, 5);
 }
 
 TEST(TestCaseName, Test2) {
     Shop shop(5, 20, 0.1, 10, 5);
     shop.Work();
-    EXPECT_EQ(shop.servedСustomers, countCash);
+    EXPECT_EQ(shop.servedСustomers, 5);
 }
 
 TEST(TestCaseName, Test3) {
@@ -29,7 +29,7 @@ TEST(TestCaseName, Test4) {
     Shop shop2(5, 20, 0.3, 10, 5);
     shop1.Work();
     shop2.Work();
-    bool better = true
+    bool better = true;
     if (shop1.servedСustomers > shop2.servedСustomers) better = false;
     EXPECT_EQ(better, false);
 }
