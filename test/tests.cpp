@@ -21,7 +21,7 @@ TEST(test3, no_queue_no_work) {
     m.run(20);
     stats s = m.get_stats();
     EXPECT_EQ(s.accepted_clients, 0);
-    EXPECT_EQ(s.avg_cash_worktime, 0)
+    EXPECT_EQ(s.avg_cash_worktime, 0);
 }
 
 TEST(test4, correct_worktime) {
@@ -51,5 +51,5 @@ TEST(test5, correct_poiss_times) {
     EXPECT_EQ(
         abs(lambda - 1000.0 / (std::accumulate(times.begin(), times.end(), 0.0) / times.size())) < 0.1,
         true
-    )
+    );
 }
