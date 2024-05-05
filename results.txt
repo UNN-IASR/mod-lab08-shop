@@ -1,0 +1,30 @@
+
+
+expected ~1000 clients
+reject prob: 0.40276
+rel throughput: 0.59724
+abs throughput: 5.9724
+avg clients in queue: 5.58023
+avg client waiting time: 0.856643
+avg client serving time: 0.558023
+avg serving clients at moment: 2.9862
+extra stats:
+system load: 5
+system idle prob: 0.000541186
+queue prob: 0.587228
+
+accepted clients: 621
+rejected clients: 385
+reject prob: 0.382704
+rel throughput: 0.617296
+abs throughput: 6.17296
+avg clients in queue: 6.70278
+avg client waiting time: 1.06734
+avg client serving time: 0.503221
+avg serving clients at moment: 2.96526
+extra stats:
+market worktime: 105
+avg cash worktime: 104.167
+avg cash idletime: 1.22033
+profit: 108191
+loss: 69558
