@@ -25,7 +25,7 @@ class Cashier {
   int serv_time;
   std::vector<Client> clients;
   std::vector<std::vector
-  <std::chrono::steady_clock::time_point> > client_times;
+  <std::chrono::high_resolution_clock::time_point> > client_times;
   std::vector<double> work_times;
   std::vector<double> onhold_times;
   bool stopped = false;
@@ -48,7 +48,7 @@ class Cashier {
   void serv_end();
   int _serv_time();
   std::vector<double> durations_client();
-  void cltimes_addend(std::chrono::steady_clock::time_point
+  void cltimes_addend(std::chrono::high_resolution_clock::time_point
   p2, int num);
   void stop();
   bool is_stopped();
