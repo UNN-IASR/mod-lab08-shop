@@ -23,21 +23,21 @@ private:
   std::vector<std::queue<Buyer*>*> cashRegisterQueues;
 
 
-  int cashRegisterAmount; //количество касс(каналов обслуживания)
-  int flowRate; //интенсивность потока покупателей(заявки на обслуживание)
-  int processingSpeed; //скорость обработки товара на кассе
-  int averageNumberOfProducts; //среднее количество товаров в тележке покупателя
-  int maxQueueLength; //максимальная длина очереди
+  int cashRegisterAmount; 
+  int flowRate; 
+  int processingSpeed; 
+  int averageNumberOfProducts; 
+  int maxQueueLength; 
 
   int maxPrice = 50;
   int maxBuyers;
-  int countBuyers = 0; // покупатели
+  int countBuyers = 0; 
 
-  int servedCustomers = 0;  //обслуженные покупатели
-  double averageQueueLength = 0;  //средняя длина очереди
-  double serviceTime = 0;  //среднее время нахождение покупателя в очереди + на кассе
-  double averageCashRegisterWorkingTime;  //среднее время работы кассы
-  double averageCashRegisterNotWorkingTime;  //среднее время простоя кассы
+  int servedCustomers = 0;  
+  double averageQueueLength = 0;  
+  double serviceTime = 0;  
+  double averageCashRegisterWorkingTime;  
+  double averageCashRegisterNotWorkingTime;  
 
   int workingCashRegisterCount = 1;
   int refuseCount = 0;
