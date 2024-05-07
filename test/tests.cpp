@@ -2,79 +2,19 @@
 #include <gtest/gtest.h>
 #include "task.h"
 
-TEST(TEST1, servedCustomers) {
-
-  int cashRegisterAmount = 2;
-  int flowRate = 500;
-  int processingSpeed = 1000;
-  int averageNumberOfProducts = 8;
-  int maxQueueLength = 6;
-  int maxBuyers = 10;
-
-  Supermarket* supermarket = new Supermarket(cashRegisterAmount, flowRate, processingSpeed, averageNumberOfProducts, maxQueueLength, maxBuyers);
-  supermarket->run();
-
-  ASSERT_TRUE(supermarket->getServedCustomers() > cashRegisterAmount);
+using namespace std;
+//test1 Инициализация
+TEST(test_first, first) {
+	Shop purchase(4, 20, 600, 5, 4);
+	ASSERT_TRUE(purchase.buy_count == 5 && purchase.Time == 600 && purchase.count == 4 && purchase.threads.size() > 0);
 }
-
-TEST(TEST2, notServedCustomers) {
-
-  int cashRegisterAmount = 2;
-  int flowRate = 500;
-  int processingSpeed = 1000;
-  int averageNumberOfProducts = 8;
-  int maxQueueLength = 6;
-  int maxBuyers = 5;
-
-  Supermarket* supermarket = new Supermarket(cashRegisterAmount, flowRate, processingSpeed, averageNumberOfProducts, maxQueueLength, maxBuyers);
-  supermarket->run();
-
-  ASSERT_EQ(supermarket->getNotServedCustomers(),0);
+//test2 моедлирования работы
+TEST(test_second, second) {
+	purchase.Start_working(true);
+	ASSERT_TRUE(purchase.buy_time > 3000 && purchase.wait_time > 5000 && purchase.work_time > 11000);
 }
-
-TEST(TEST3, notServedCustomers) {
-
-  int cashRegisterAmount = 2;
-  int flowRate = 500;
-  int processingSpeed = 1000;
-  int averageNumberOfProducts = 8;
-  int maxQueueLength = 6;
-  int maxBuyers = 10;
-
-  Supermarket* supermarket = new Supermarket(cashRegisterAmount, flowRate, processingSpeed, averageNumberOfProducts, maxQueueLength, maxBuyers);
-  supermarket->run();
-
-  ASSERT_EQ(supermarket->getNotServedCustomers(), 2);
-}
-
-TEST(TEST4, refuseProbability) {
-
-  int cashRegisterAmount = 2;
-  int flowRate = 500;
-  int processingSpeed = 1000;
-  int averageNumberOfProducts = 8;
-  int maxQueueLength = 6;
-  int maxBuyers = 10;
-
-  Supermarket* supermarket = new Supermarket(cashRegisterAmount, flowRate, processingSpeed, averageNumberOfProducts, maxQueueLength, maxBuyers);
-  supermarket->run();
-
-  ASSERT_TRUE(supermarket->refuseProbability() < 0.5);
-}
-
-TEST(TEST5, serviceTime) {
-
-  int cashRegisterAmount = 2;
-  int flowRate = 500;
-  int processingSpeed = 1000;
-  int averageNumberOfProducts = 8;
-  int maxQueueLength = 6;
-  int maxBuyers = 3;
-
-  Supermarket* supermarket = new Supermarket(cashRegisterAmount, flowRate, processingSpeed, averageNumberOfProducts, maxQueueLength, maxBuyers);
-  supermarket->run();
-
-  double time = (averageNumberOfProducts + 10) * processingSpeed;
-
-  ASSERT_TRUE(supermarket->getServiceTime() < time);
+//test3 итоговых пропускных способностей многоканальной СВО с ограниченной очередью
+TEST(test_third, third) {
+	Shop purchase(4, 20, 600, 5, 4);
+	ASSERT_TRUE(purchase.A > 0.8 && purchase.Q > 0.4);
 }
