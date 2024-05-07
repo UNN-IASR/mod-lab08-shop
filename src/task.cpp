@@ -122,8 +122,8 @@ bool Cashier::is_serv() {
 
 void Cashier::client_add(Client cl) {
   clients.push_back(cl);
-  client_times.push_back({std::chrono::steady_clock::now(),
-  std::chrono::steady_clock::now() });
+  client_times.push_back({std::chrono::high_resolution_clock::now(),
+  std::chrono::high_resolution_clock::now() });
 }
 
 std::vector<double> Cashier::Work_Times() {
@@ -169,7 +169,7 @@ std::vector<double> Cashier::durations_client() {
   return durations;
 }
 
-void Cashier::cltimes_addend(std::chrono::steady_clock::time_point
+void Cashier::cltimes_addend(std::chrono::high_resolution_clock::time_point
 p2, int num) {
   client_times[num] = {client_times[num][0], p2};
 }
