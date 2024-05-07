@@ -1,4 +1,5 @@
-﻿#include "task.h"
+//Copyright Maz 2024
+#include "../include/task.h"
 
 double avg_value(std::vector<double> values) {
   double sum = 0;
