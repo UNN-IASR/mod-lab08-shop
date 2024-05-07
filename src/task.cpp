@@ -1,4 +1,5 @@
-#include "task.h"
+//Copyright Maz 2024
+#include "../include/task.h"
 
 Client::Client(int count, int number) {
   counter = number;
