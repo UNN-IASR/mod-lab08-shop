@@ -18,8 +18,6 @@ bool Client::Was_on_Cash() {
   return was_on_cash;
 }
 
-//void Cashier::service(Client& Cur, std::vector<Client>& Clients, bool& is_serv, int time,
-// std::vector<double>& work_times, std::vector<double>& onhold_times) {
   void service(Cashier& cash) {
 
   Client cur;
