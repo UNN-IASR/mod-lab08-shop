@@ -10,6 +10,7 @@
 #include <chrono>
 #include <fstream>
 #include <random>
+#include <thread>
 
 struct ProcEventArgs {
     int id;
