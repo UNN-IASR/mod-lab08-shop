@@ -1,10 +1,11 @@
+#include <iostream>
 #include "task.h"
+
 
 int main()
 {
-
-  Supermarket* supermarket = new Supermarket(2, 500, 1000, 8, 6,1000);
-  supermarket->run();
-
-
+	Shop s(4, 20, 600, 5, 4);
+	s.Start_working();
+	int k;
+	cin >> k;
 }
