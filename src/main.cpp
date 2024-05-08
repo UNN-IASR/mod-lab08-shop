@@ -9,11 +9,11 @@ int Fact(int n) {
 
 int main() {
     int cashDeskCount = 3; 
-    double customerIntensity = 5;
-    int productProcessingSpeed = 500;
+    double customerIntensity = 40;
+    int productProcessingSpeed = 50;
     int avgProductCount = 3;
     int maxQueueLength = 5;
-    int countCustomer = 20;
+    int countCustomer = 1000;
 
     double mu = 1000.0 / productProcessingSpeed / avgProductCount;
     double ro = customerIntensity / mu;
