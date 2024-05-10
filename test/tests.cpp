@@ -1,6 +1,6 @@
 
 #include <gtest/gtest.h>
-#include "task.h"
+#include "../include/task.h"
 
 
 TEST(TestCaseName, Test1) {
