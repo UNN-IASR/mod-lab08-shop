@@ -1,4 +1,4 @@
-#include "task.h"
+#include "../include/task.h"
 
 Store::Store(int num, double intens, double _speed, double aver, int lenght) {
 	cassa = num;
