@@ -4,6 +4,7 @@
 #include <vector>
 #include <chrono>
 #include <list>
+#include <cmath>
 
 class Customer {
 public:
