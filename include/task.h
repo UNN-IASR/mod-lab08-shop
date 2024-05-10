@@ -1,11 +1,6 @@
 #pragma once
 #include <thread>
-#include <string>
 #include <mutex>
-#include <future>
-#include <cmath>
-#include <queue>
-#include <deque>
 #include <vector>
 #include <chrono>
 #include <list>
