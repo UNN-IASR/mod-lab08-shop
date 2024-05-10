@@ -96,6 +96,13 @@ void Store::work() {
 		(std::chrono::system_clock::now() - tim).count();
 }
 
+int fac(int n) {
+	if (n == 0)
+		return 1;
+	else
+		return n * fac(n - 1);
+}
+
 void Store::stat() {
 	worked_cassa = 0;
 	waited_cassa = 0;
@@ -134,9 +141,3 @@ void Store::stat() {
 	t_a_skip = l * t_o_skip;
 }
 
-double fac(int n) {
-	if (n == 0)
-		return 1;
-	else
-		return n * fac(n - 1);
-}
