@@ -1,6 +1,9 @@
-// Copyright 2021 Chernyadeva Anna
+// Copyright 2024 Chernyadeva Anna
 #include <gtest/gtest.h>
 #include "../include/task.h"
+#include "task1.h"
+#include "task2.h"
+#include "task3.h"
 
 TEST(Test, PropusknayaSposobnost) {
     Shop shop(5, 1, 0.1, 10, 5);
