@@ -13,7 +13,7 @@ TEST(market, produce_clientAddedToQueue) {
     auto stop = std::chrono::steady_clock::now();
 
     int milliseconds = (stop - start).count() / 1000000;
-    EXPECT_EQ(1000, );
+    EXPECT_EQ(1000, milliseconds);
     EXPECT_EQ(1, m.clientsQueue.size());
 }
 
