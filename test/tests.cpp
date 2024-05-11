@@ -12,7 +12,7 @@ TEST(market, produce_clientAddedToQueue) {
     m.Produce(1);
     auto stop = std::chrono::steady_clock::now();
 
-    int milliseconds = (stop - start).count() / 1_000_000;
+    int milliseconds = (stop - start).count() / 1000000;
     EXPECT_EQ(1000, );
     EXPECT_EQ(1, m.clientsQueue.size());
 }
@@ -34,7 +34,7 @@ TEST(market, consume_oneClient) {
     m.Consume();
     auto stop = std::chrono::steady_clock::now();
     
-    int milliseconds = (stop - start).count() / 1_000_000;
+    int milliseconds = (stop - start).count() / 1000000;
     EXPECT_EQ(100, milliseconds);
     EXPECT_EQ(0, m.clientsQueue.size());
     EXPECT_EQ(1, m.ServedClients);
