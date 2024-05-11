@@ -1,6 +1,7 @@
 // Copyright 2024 Chernyadeva Anna
 #include <gtest/gtest.h>
-#include "task.h"
+#include "../include/task.h"
+
 TEST(Test, PropusknayaSposobnost) {
     Shop shop(5, 1, 0.1, 10, 5);
     shop.Start();
