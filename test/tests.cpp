@@ -17,11 +17,8 @@ TEST(Test, ObsluzivanieNaCasse) {
 
 TEST(Test, VremyaRaboti) {
     Shop shop(1, 1, 1, 1, 1);
-    auto start = std::chrono::steady_clock::now();
     shop.Start();
-    auto stop = std::chrono::steady_clock::now();
-    int milliseconds = (stop - start).count();
     bool f = false;
-    if (milliseconds < 6000) f = true;
+    if (shop.allTime < 6000) f = true;
     EXPECT_EQ(f, true);
 }
