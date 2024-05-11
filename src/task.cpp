@@ -33,8 +33,8 @@ Market::Market(int maxQueueLength,
 
 void Market::Simulate(int clientsCount) {
     isWorking = true;
-    std::thread producerThread(Market::Produce, this, clientsCount);
-    std::thread consumerThread(Consume, this);
+    std::thread producerThread(&Market::Produce, this, clientsCount);
+    std::thread consumerThread(&Market::Consume, this);
 
     producerThread.join();
     isWorking = false;
@@ -105,10 +105,10 @@ void Market::Consume() {
             if (!clientsQueue.empty()) {
                 auto client = clientsQueue.front();
                 clientsQueue.pop();
-                threadPool[i] = std::thread {Market::ProcessClient, 
+                threadPool[i] = std::thread(&Market::ProcessClient, 
                                                 this,
                                                 std::ref(client), 
-                                                std::ref(cashboxes[i])};
+                                                std::ref(cashboxes[i]));
                 if(isLoggingEnabled) {
                     std::cout << "Обслуживание клиента " 
                         << client.Id << "(Поток: " 
