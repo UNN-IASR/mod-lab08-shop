@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 
 #define private public
-#include "Header.h"
+#include "../include/task.h"
 
 TEST(shop, produce_clientAddedToQueue) {
     Shop s(1, 1, 1, 1, 1);
