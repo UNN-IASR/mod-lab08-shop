@@ -1,140 +1,196 @@
 // Copyright 2024 alenapoliakova
-#include "../include/task.h"
-using namespace std;
+#include "task.h"
 
-Supermarket::Supermarket(int cashboxes_number1, int max_num_of_customers1, int customers_intensity1, int serving_speed1, int average_product_num1, int max_line_len1) {
-    cashboxes_number = cashboxes_number1;
-    max_num_of_customers = max_num_of_customers1;
-    customers_intensity = customers_intensity1;
-    serving_speed = serving_speed1;
-    average_product_num = average_product_num1;
-    max_line_len = max_line_len1;
-}
+int generateRandomNumber(int min, int max) {
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dis(min, max);
+    return dis(gen);
+};
 
-Customer::Customer(std::vector<int> check1) {
-    check = check1;
-}
 
-double Supermarket::getAverageLineLength() {
-    return average_line_len;
-}
+Store::Store(int registers, int intensity, int speed, int maxQueue) {
+    number_of_cash_registers = registers;
+    customer_intensity = intensity;
+    processing_speed = speed;
+    maximum_queue_length = maxQueue;
+    served_customers = 0;
+    unserved_customers = 0;
+    total_queue_length = 0;
+    total_customer_stay_time = 0;
+    total_checkout_time = 0;
+    total_idle_time = 0;
+    simulationFinished = false;
+    checkout_times.resize(registers, 0);
+    total_time = 0;
 
-double Supermarket::getAverageWaitingTimeForCustomer() {
-    double result = 0;
-    for (int i = 1; i <= average_line_len; i++) {
-        result += i * static_cast<double>(average_product_num * serving_speed);
+};
+
+
+void Store::simulate(int simulationTime, double average_items) {
+    auto start = std::chrono::high_resolution_clock::now();
+    simulationFinished = false;
+    std::vector<std::thread> cashierThreads;
+    for (int i = 0; i < number_of_cash_registers; i++) {
+        cashierThreads.emplace_back(&Store::cashierProcess, this);
     }
-    return result / average_line_len;
-}
+    std::thread customerThread(&Store::customerProcess, this, average_items);
+    auto seconds = std::chrono::duration<double>(simulationTime);
+    std::this_thread::sleep_for(seconds);
+    simulationFinished = true;
 
-double Supermarket::getAverageWorkTime() {
-    return average_work_time;
-}
-
-double Supermarket::getAverageDownTime() {
-    return average_down_time;
-}
-
-int Supermarket::workingCashboxesNumber() {
-    return cashboxes_WIP.size();
-}
-
-int Supermarket::getRequestsFlow(){
-    return requests_flow;
-}
-
-int Supermarket::getAmountOfServedCustomers() {
-    return served_customers;
-}
-
-int Supermarket::getAmountOfUnservedCustomers() {
-    return unserved_customers;
-}
-
-Customer* Supermarket::getCustomer() {
-    std::vector<int> check(average_product_num);
-    for (int i = 0; i < average_product_num; i++) {
-        check[i] = std::rand() % 100 + 1;
+    auto end = std::chrono::high_resolution_clock::now();
+    total_time = (double)(end - start).count() / 1000000000;
+    total_idle_time = total_time - total_checkout_time / number_of_cash_registers;
+    for (auto& thread : cashierThreads) {
+        thread.join();
     }
-    return new Customer(check);
-}
+    customerThread.join();
 
-void Supermarket::start() {
-    serveSupermarket();
-    for (auto current_line : cashboxes_WIP) {
-        current_line->join();
-    }
-    average_line_len = static_cast<double>(all_lines / all_checks_for_customers);
-}
+};
 
-void Supermarket::serveCustomer(Customer* customer1, int number) {
-    for (auto i = 0; i < customer1->check.size(); i++) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(serving_speed));
-        std::unique_lock<std::mutex> my_lock(myMutex);
-        average_work_time += static_cast<double>(serving_speed * static_cast<std::int64_t>(working_cashboxes) / static_cast<double>(cashboxes_number));
-        average_down_time += static_cast<double>(serving_speed * (cashboxes_number - static_cast<std::int64_t>(working_cashboxes)) / static_cast<double>(cashboxes_number));
-        std::cout << "CASHBOX #" << std::this_thread::get_id()
-            << " CUSTOMER: " << number << " PRODUCT: " << i + 1 << "\n";
-        my_lock.unlock();
-    }
-    served_customers++;
-}
 
-void Supermarket::serveLine(std::queue<Customer*>* customers1) {
-    int number_of_served_customers = 1;
-    while (!finished) {
-        if (!customers1->empty()) {
-            int count = 0;
-            int iteration = 0;
-            std::queue<int>* prevs = new std::queue<int>();
-            while (!customers1->empty()) {
-                auto customer = customers1->front();
-                serveCustomer(customer, number_of_served_customers);
-                customers1->pop();
-                count++;
-                number_of_served_customers++;
-                iteration++;
-            }
-            std::unique_lock<std::mutex> my_lock(myMutex);
-            all_lines += count;
-            all_checks_for_customers++;
-            my_lock.unlock();
+void Store::cashierProcess() {
+    auto start = std::chrono::high_resolution_clock::now();
+
+    while (true) {
+        std::unique_lock<std::mutex> lock(mtx);
+        auto current = std::chrono::high_resolution_clock::now();
+
+        if (!customer_queue.empty()) {
+            Customer customer = customer_queue.front();
+            customer_queue.pop();
+
+            auto operating = (double)customer.number_of_items / processing_speed;
+            auto checkoutTime = std::chrono::duration<double>(operating);
+
+            lock.unlock();
+
+            std::this_thread::sleep_for(checkoutTime);
+
+            lock.lock();
+            total_checkout_time += operating;
+            total_customer_stay_time += (getCurrentTime() - customer.arrivalTime) + operating;
+            served_customers++;
+        }
+        if (simulationFinished) {
+            break;
         }
     }
-}
 
-void Supermarket::serveSupermarket() {
-    srand(time(nullptr));
-    int active_lines = 0;
-    for (int i = 0; i < max_num_of_customers; i++) {
-        requests_flow++;
-        working_cashboxes = 0;
-        for (auto it = lines.begin(); it != lines.end(); it++) {
-            if ((*it)->size() > 0) {
-                working_cashboxes++;
-            }
+    auto end = std::chrono::high_resolution_clock::now();
+};
+
+
+void Store::customerProcess(double average_items) {
+    auto start1 = std::chrono::high_resolution_clock::now();
+
+    while (!simulationFinished) {
+        auto seconds = std::chrono::duration<double>((double)1 / customer_intensity);
+        std::this_thread::sleep_for(seconds);
+
+        Customer customer;
+        customer.arrivalTime = getCurrentTime();
+        customer.number_of_items = generateRandomNumber(0, 2 * average_items);
+
+        if (customer_queue.size() < maximum_queue_length) {
+            customer_queue.push(customer);
+            total_queue_length += customer_queue.size();
         }
-        bool free_line = false;
-        std::this_thread::sleep_for(std::chrono::milliseconds(customers_intensity));
-        for (auto it = lines.begin(); it != lines.end(); it++) {
-            if ((*it)->size() < line_len) {
-                (*it)->push(getCustomer());
-                free_line = true;
-                break;
-            }
-        }
-        if (!free_line) {
-            if (active_lines < cashboxes_number) {
-                active_lines++;
-                auto new_line = new std::queue <Customer*>;
-                new_line->push(getCustomer());
-                lines.push_back(new_line);
-                cashboxes_WIP.push_back(new std::thread(&Supermarket::serveLine, this, new_line));
-            }
-            else {
-                unserved_customers++;
-            }
+        else {
+            unserved_customers++;
         }
     }
-    finished = true;
-}
+
+
+    auto end1 = std::chrono::high_resolution_clock::now();
+
+};
+
+
+int Store::getCurrentTime() {
+    return std::chrono::duration_cast<std::chrono::seconds>(
+        std::chrono::system_clock::now().time_since_epoch()).count();
+};
+
+
+Statics Store::printStatistics() {
+    double average_queue_length = static_cast<double>(total_queue_length) / served_customers;
+    double average_customer_stay_time = static_cast<double>(total_customer_stay_time) / served_customers;
+    double average_checkout_time = static_cast<double>(total_checkout_time) / served_customers;
+    double  average_idle_time = static_cast<double>(total_time - average_checkout_time);
+
+    std::cout << "Served customers: " << served_customers << std::endl;
+    std::cout << "Unserved customers: " << unserved_customers << std::endl;
+    std::cout << "Average queue length: " << average_queue_length << std::endl;
+    std::cout << "Average buyer's stay time: " << average_customer_stay_time << std::endl;
+    std::cout << "Average checkout time: " << average_checkout_time << std::endl;
+    std::cout << "Average idle time at checkout: " << average_idle_time << std::endl << std::endl;
+
+    double failureProbability = static_cast<double>(unserved_customers) / (unserved_customers + served_customers);
+    std::cout << "Real Probability of failure: " << failureProbability << std::endl;
+    double relativeThroughput = static_cast<double>(served_customers) / (unserved_customers + served_customers);
+    std::cout << "Real Relative throughput of the store: " << relativeThroughput << std::endl;
+    double absoluteThroughput = static_cast<double>(served_customers) / total_time;
+    std::cout << "Real Absolute throughput of the store: " << absoluteThroughput << std::endl;
+
+    Statics stat;
+    stat.absoluteThroughput = absoluteThroughput;
+    stat.failureProbability = failureProbability;
+    stat.relativeThroughput = relativeThroughput;
+    stat.served_customers = served_customers;
+    stat.unserved_customers = unserved_customers;
+
+    return stat;
+};
+
+Statics Store::printTeoreticStatics(double intensity, double speed, int number_of_cash_registers, int max_queue_length, double average_items) {
+    double r = intensity * average_items / speed;
+    double  P0 = calculate_P0(number_of_cash_registers, r, max_queue_length);
+
+    double failureProbability = calculate_Pn(number_of_cash_registers, r, P0, max_queue_length);
+    std::cout << "Teoretic Probability of failure: " << failureProbability << std::endl;
+
+    double relativeThroughput = 1 - failureProbability;
+    std::cout << "Teoretic Relative throughput of the store: " << relativeThroughput << std::endl;
+
+    double absoluteThroughput = average_items * intensity * relativeThroughput;
+    std::cout << "Teoretic Absolute throughput of the store: " << absoluteThroughput << std::endl;
+
+    Statics stat;
+    stat.absoluteThroughput = absoluteThroughput;
+    stat.failureProbability = failureProbability;
+    stat.relativeThroughput = relativeThroughput;
+
+    return stat;
+};
+
+
+double calculate_r(double lyamda, double nu) {
+    return lyamda / nu;
+};
+
+double calculate_P0(int pool_count, double r, int max_length) {
+    double P0 = 0;
+    for (int i = 0; i <= pool_count; i++)
+    {
+        P0 = P0 + pow(r, i) / Factorial(i);
+    }
+    for (int i = 1; i <= max_length; i++)
+    {
+        P0 = P0 + pow(r, pool_count + i) / (Factorial(pool_count) * pow(pool_count, i));
+    }
+    return pow(P0, -1);
+};
+
+double calculate_Pn(int pool_count, double r, double P0, int max_length) {
+    double Pn = pow(r, pool_count + max_length) / (Factorial(pool_count) * pow(pool_count, max_length)) * P0;
+    return Pn;
+};
+
+double Factorial(double n) {
+    double factorial = 1;
+    for (int i = 1; i <= n; i++)
+        factorial = factorial * i;
+    return factorial;
+};

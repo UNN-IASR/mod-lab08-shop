@@ -1,63 +1,87 @@
-// Copyright 2024 alenapoliakova
+// Copyright 2024 GHA Test Team
 #include <gtest/gtest.h>
-#include "../include/task.h"
+#include "task.h"
 
-TEST(TEST1, create_customer) {
-    int cashboxes_number = 5;
-    int max_num_of_customers = 100;
-    int customers_intensity = 20;
-    int serving_speed = 15;
-    int average_product_num = 10;
-    int max_line_len = 5;
-    Supermarket supermarket(cashboxes_number, max_num_of_customers, customers_intensity, serving_speed, average_product_num, max_line_len);
-    Customer* result = supermarket.getCustomer();
-    ASSERT_EQ(result->check.size(), 10);
+TEST(StoreTest, GenerateRandomNumberTest) {
+    int min = 1;
+    int max = 10;
+    int random_number = generateRandomNumber(min, max);
+    EXPECT_TRUE(random_number >= min && random_number <= max);
 }
 
-TEST(TEST2, get_served_and_unserved_customers_amount) {
-    int cashboxes_number = 5;
-    int max_num_of_customers = 10;
-    int customers_intensity = 2;
-    int serving_speed = 5;
-    int average_product_num = 10;
-    int max_line_len = 10;
-    Supermarket supermarket(cashboxes_number, max_num_of_customers, customers_intensity, serving_speed, average_product_num, max_line_len);
-    supermarket.start();
-    ASSERT_EQ(supermarket.getAmountOfUnservedCustomers(), 1);
+TEST(StoreTest, GetCurrentTimeTest) {
+    Store store(1, 1, 1, 1);
+    int current_time = store.getCurrentTime();
+    EXPECT_TRUE(current_time > 0);
 }
 
-TEST(TEST3, get_average_line_length) {
-    int cashboxes_number = 5;
-    int max_num_of_customers = 10;
-    int customers_intensity = 2;
-    int serving_speed = 5;
-    int average_product_num = 10;
-    int max_line_len = 10;
-    Supermarket supermarket(cashboxes_number, max_num_of_customers, customers_intensity, serving_speed, average_product_num, max_line_len);
-    supermarket.start();
-    ASSERT_EQ(supermarket.getAverageWorkTime(), 100);
+TEST(StoreTest, ProcessTest1) {
+    Store store(1, 1, 1, 1);
+    store.simulate(2, 2);
+    store.printStatistics();
+    Statics stat = store.printStatistics();
+    EXPECT_EQ(stat.served_customers, 1);
 }
 
-TEST(TEST4, get_average_downtime) {
-    int cashboxes_number = 1;
-    int max_num_of_customers = 5;
-    int customers_intensity = 1;
-    int serving_speed = 20;
-    int average_product_num = 5;
-    int max_line_len = 1;
-    Supermarket supermarket(cashboxes_number, max_num_of_customers, customers_intensity, serving_speed, average_product_num, max_line_len);
-    supermarket.start();
-    ASSERT_EQ(supermarket.getAverageDownTime(), 0);
+TEST(StoreTest, ProcessTest2) {
+    Store store(0, 10, 1, 10);
+    store.simulate(10, 2);
+    Statics stat = store.printStatistics();
+    EXPECT_EQ(stat.served_customers, 0);
+    EXPECT_EQ(stat.failureProbability, 1);
+    EXPECT_EQ(stat.relativeThroughput, 0);
 }
 
-TEST(TEST5, get_average_waiting_time_for_customer) {
-    int cashboxes_number = 5;
-    int max_num_of_customers = 10;
-    int customers_intensity = 2;
-    int serving_speed = 5;
-    int average_product_num = 10;
-    int max_line_len = 10;
-    Supermarket supermarket(cashboxes_number, max_num_of_customers, customers_intensity, serving_speed, average_product_num, max_line_len);
-    supermarket.start();
-    EXPECT_EQ(supermarket.getAverageWorkTime(), 100);
+TEST(StoreTest, ProcessTest3) {
+    Store store(1, 1, 1, 0);
+    store.simulate(2, 2);
+    store.printStatistics();
+    Statics stat = store.printStatistics();
+    EXPECT_EQ(stat.served_customers, 0);
+}
+
+TEST(StoreTest, FailureProbability) {
+    Store store(4, 10, 1, 10);
+    store.simulate(10, 2);
+    Statics stat = store.printStatistics();
+    EXPECT_TRUE(stat.failureProbability <= 1 && stat.failureProbability >= 0);
+}
+
+TEST(StoreTest, RelativeThroughput) {
+    Store store(4, 10, 1, 10);
+    store.simulate(10, 2);
+    Statics stat = store.printStatistics();
+    EXPECT_TRUE(stat.relativeThroughput <= 1 && stat.relativeThroughput >= 0);
+}
+
+TEST(StoreTest, RealVsTeoretic1) {
+    int number_cash_registers = 2;
+    int customer_intensity = 10;
+    double speed = 10;
+    int max_queue_length = 10;
+    int simulation_time = 20;
+    double average_items = 3;
+
+    Store store(number_cash_registers, customer_intensity, speed, max_queue_length);
+    store.simulate(20, average_items);
+    Statics stat1 = store.printStatistics();
+    Statics stat2 = store.printTeoreticStatics(customer_intensity, speed, number_cash_registers, max_queue_length, average_items);
+    double eps = 0.2;
+    EXPECT_TRUE(abs(stat1.relativeThroughput - stat2.relativeThroughput) <= eps);
+}
+
+TEST(StoreTest, RealVsTeoretic2) {
+    int number_cash_registers = 2;
+    int customer_intensity = 10;
+    double speed = 10;
+    int max_queue_length = 10;
+    int simulation_time = 20;
+    double average_items = 3;
+
+    Store store(number_cash_registers, customer_intensity, speed, max_queue_length);
+    store.simulate(20, average_items);
+    Statics stat1 = store.printStatistics();
+    Statics stat2 = store.printTeoreticStatics(customer_intensity, speed, number_cash_registers, max_queue_length, average_items);
+    double eps = 0.2;
+    EXPECT_TRUE(abs(stat1.failureProbability - stat2.failureProbability) <= eps);
 }

@@ -1,22 +1,17 @@
 // Copyright 2024 alenapoliakova
-#include "../include/task.h"
-#include <iostream>
+#include "task.h"
 
-int main()
-{
-    int cashboxes_number = 10;
-    int max_num_of_customers = 100;
-    int customers_intensity = 10;
-    int serving_speed = 30;
-    int average_product_num = 10;
-    int max_line_len = 5;
-    Supermarket supermarket(cashboxes_number, max_num_of_customers, customers_intensity, serving_speed, average_product_num, max_line_len);
-    supermarket.start();
-    std::cout <<  std::endl << std::endl << "STATISTICS" << std::endl << std::endl;
-    std::cout << "Unserved customers: " << supermarket.getAmountOfUnservedCustomers() << std::endl;
-    std::cout << "Served customers: " << supermarket.getAmountOfServedCustomers() << std::endl;
-    std::cout << "Average line length: " << supermarket.getAverageLineLength() << std::endl;
-    std::cout << "Average waiting time: " << supermarket.getAverageWaitingTimeForCustomer() << std::endl;
-    std::cout << "Average worktime: " << supermarket.getAverageWorkTime() << std::endl;
-    std::cout << "Average downtime: " << supermarket.getAverageDownTime() << std::endl;
+int main() {
+    int number_cash_registers = 2;
+    int customer_intensity = 10;
+    double speed = 10;
+    int max_queue_length = 10;
+    int simulation_time = 20;
+    double average_items = 3;
+    Store store(number_cash_registers, customer_intensity, speed, max_queue_length);
+
+    store.simulate(simulation_time, average_items);
+
+    store.printStatistics();
+    store.printTeoreticStatics(customer_intensity, speed, number_cash_registers, max_queue_length, average_items);
 }
