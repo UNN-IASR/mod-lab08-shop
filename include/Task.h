@@ -7,6 +7,7 @@
 #include <vector>
 #include <fstream>
 #include <math.h>
+#include <condition_variable>
 
 using std::mutex;
 using std::condition_variable;
@@ -45,11 +46,11 @@ public:
 	// int max_queue_length;
 
 private:
-	int num_checkouts;  // Количество касс
-	double lambda;  // Интенсивность потока покупателей
-	int checkout_time_ms;  // Скорость обработки товара на кассе (в миллисекундах)
-	int max_queue_length;   // Максимальная длина очереди
-	double mean_num_items;  // Среднее количество товаров в тележке покупателя
+	int num_checkouts;  // ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЄГ Г±Г±
+	double lambda;  // Г€Г­ГІГҐГ­Г±ГЁГўГ­Г®Г±ГІГј ГЇГ®ГІГ®ГЄГ  ГЇГ®ГЄГіГЇГ ГІГҐГ«ГҐГ©
+	int checkout_time_ms;  // Г‘ГЄГ®Г°Г®Г±ГІГј Г®ГЎГ°Г ГЎГ®ГІГЄГЁ ГІГ®ГўГ Г°Г  Г­Г  ГЄГ Г±Г±ГҐ (Гў Г¬ГЁГ«Г«ГЁГ±ГҐГЄГіГ­Г¤Г Гµ)
+	int max_queue_length;   // ГЊГ ГЄГ±ГЁГ¬Г Г«ГјГ­Г Гї Г¤Г«ГЁГ­Г  Г®Г·ГҐГ°ГҐГ¤ГЁ
+	double mean_num_items;  // Г‘Г°ГҐГ¤Г­ГҐГҐ ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГІГ®ГўГ Г°Г®Гў Гў ГІГҐГ«ГҐГ¦ГЄГҐ ГЇГ®ГЄГіГЇГ ГІГҐГ«Гї
 	queue<Client> client_queue;
 
 	mutex queue_mutex;
