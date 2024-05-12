@@ -1,7 +1,7 @@
 // Copyright 2021 GHA Test Team
 #include <gtest/gtest.h>
 #include <vector>
-#include "task.h"
+#include "../include/task.h"
 
 TEST(task, basic) {
     Task task(4, 0);
