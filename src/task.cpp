@@ -179,11 +179,11 @@ int Cash_Choose(Shopping_mall array[], int money_count, int large_queue) {
 	return num;
 }
 
-//Âçÿë ôóíêöèþ ó ñåáÿ èç 7 ëàáîðòîðíîé ðàáîòû
+//Взял функцию у себя из 7 лаборторной работы
 double Factorial_Recursive(int n) {
-	//Ðåêóðñèâíûé âûçîâ, ïðè i != 0
+	//Рекурсивный вызов, при i != 0
 	if (n != 0) return n * Factorial_Recursive(n - 1);
-	//Áàçîâûé ñëó÷àé: ôàêòîðèàë îò 0 ðàâåí 1
+	//Базовый случай: факториал от 0 равен 1
 	else return 1;
 }
 
