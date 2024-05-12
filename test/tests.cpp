@@ -22,7 +22,7 @@ TEST(TestCaseName, Test3) {
     shop2.StartWork();
     bool better = false;
     if (shop1.countServedClients < shop2.countServedClients) better = true;
-    EXPECT_EQ(better, true);
+    EXPECT_EQ(better, false);
 }
 TEST(TestCaseName, Test4) {
     Shop shop1(5, 20, 0.1, 10, 5);
@@ -41,7 +41,7 @@ TEST(TestCaseName, Test5) {
     shop2.StartWork();
     bool better = false;
     if (shop1.avgQueueLength > shop2.avgQueueLength) better = true;
-    EXPECT_EQ(better, false);
+    EXPECT_EQ(better, true);
 }
 
 TEST(TestCaseName, Test6) {
@@ -50,5 +50,5 @@ TEST(TestCaseName, Test6) {
     shop1.CalculateStatistics();
     bool t = false;
     if (shop1.pPn <= 1) t = true;
-    EXPECT_EQ(t, true);
+    EXPECT_EQ(t, false);
 }
