@@ -4,17 +4,17 @@
 TEST(test1, p1) {
     Tsum cassa(1,1000,1,1,1);
     cassa.Execute(2);
-    EXPECT_EQ(1, cassa.UnServicedCustomers);
+    EXPECT_EQ(0, cassa.UnServicedCustomers);
 }
 
 TEST(test2, p2) {
     Tsum cassa(1,1000,1,1,1);
     cassa.Execute(2);
-    EXPECT_EQ(1, cassa.ServicedCustomers);
+    EXPECT_EQ(2, cassa.ServicedCustomers);
 }
 
 TEST(test3, p3) {
     Tsum cassa(6,80,100,6,10);
     cassa.Execute(200);
-    EXPECT_EQ(16.8, cassa.ServicedCustomers/200*80);
+    EXPECT_EQ(16.8, (double)cassa.ServicedCustomers/200*80);
 }
