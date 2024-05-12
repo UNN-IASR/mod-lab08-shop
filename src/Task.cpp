@@ -1,3 +1,4 @@
+// Copyright 2024 Shalnov_Yuri
 #include "Task.h"
 
 int fact(int n) {
@@ -66,7 +67,7 @@ void task::serveClients(int id)
     while (true) {
         unique_lock<mutex> lock(queue_mutex);
         while (client_queue.empty()) {
-            // Если очередь пуста, ждем появления покупателей
+            // Г…Г±Г«ГЁ Г®Г·ГҐГ°ГҐГ¤Гј ГЇГіГ±ГІГ , Г¦Г¤ГҐГ¬ ГЇГ®ГїГўГ«ГҐГ­ГЁГї ГЇГ®ГЄГіГЇГ ГІГҐГ«ГҐГ©
             if (clients_finished) {
                 return;
             }
