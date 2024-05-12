@@ -56,12 +56,8 @@ public:
     std::vector<double> duration_work_shopper();
 };
 
-//void service(Cashier& cash); 
 void servicing(Shopping_mall& mall);
 
-
-//ПОПРАВИТЬ
-//int CashChoose(Cashier casses[], int cash_count, int max_queue)
 int Cash_Choose(Shopping_mall casses[], int cash_count, int max_queue);
 
 double Factorial_Recursive(int n);
