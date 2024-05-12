@@ -1,4 +1,4 @@
-#include "task.h"
+#include "Task.h"
 
 int main() {
     setlocale(LC_ALL, "Russian");
@@ -29,20 +29,20 @@ int main() {
     double L_srv = A / mu;
     double t = L_q / lambda + Q / mu;
     double t_q = L_q / lambda;
-    // Вывод статистики
+    // Г‚Г»ГўГ®Г¤ Г±ГІГ ГІГЁГ±ГІГЁГЄГЁ
     ofstream file("result.txt");
-    file << "Количество обслуженных покупателей: " << simulation.clients_served << endl;
-    file << "Количество отказов: " << simulation.rejected_clients << endl;
-    file << "Среднее время нахождения покупателя в очереди + на кассе: " << simulation.total_time / simulation.clients_served << " ms" << endl;
-    file << "Среднее время работы кассы: " << simulation.total_time / num_checkouts << " ms" << endl;
-    file << "Среднее время простоя кассы: " << simulation.idle_time / num_checkouts << " ms" << endl;
-    file << "Вероятность отказа: " << (double)simulation.rejected_clients / 100 << endl;
-    file << "Относительная пропускная способность: " << (double)simulation.clients_served / 100 << endl;
-    file << "Теоретические расчеты. " << endl;
-    file << "Вероятность отказа: " << P_rej << endl;
-    file << "Относительная пропускная способность: " << Q << endl;
-    file << "Абсолютная пропускная способность: " << A << endl;
-    file << "Среднее число заявок в очереди: " << L_q << std::endl;
+    file << "ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г®ГЎГ±Г«ГіГ¦ГҐГ­Г­Г»Гµ ГЇГ®ГЄГіГЇГ ГІГҐГ«ГҐГ©: " << simulation.clients_served << endl;
+    file << "ГЉГ®Г«ГЁГ·ГҐГ±ГІГўГ® Г®ГІГЄГ Г§Г®Гў: " << simulation.rejected_clients << endl;
+    file << "Г‘Г°ГҐГ¤Г­ГҐГҐ ГўГ°ГҐГ¬Гї Г­Г ГµГ®Г¦Г¤ГҐГ­ГЁГї ГЇГ®ГЄГіГЇГ ГІГҐГ«Гї Гў Г®Г·ГҐГ°ГҐГ¤ГЁ + Г­Г  ГЄГ Г±Г±ГҐ: " << simulation.total_time / simulation.clients_served << " ms" << endl;
+    file << "Г‘Г°ГҐГ¤Г­ГҐГҐ ГўГ°ГҐГ¬Гї Г°Г ГЎГ®ГІГ» ГЄГ Г±Г±Г»: " << simulation.total_time / num_checkouts << " ms" << endl;
+    file << "Г‘Г°ГҐГ¤Г­ГҐГҐ ГўГ°ГҐГ¬Гї ГЇГ°Г®Г±ГІГ®Гї ГЄГ Г±Г±Г»: " << simulation.idle_time / num_checkouts << " ms" << endl;
+    file << "Г‚ГҐГ°Г®ГїГІГ­Г®Г±ГІГј Г®ГІГЄГ Г§Г : " << (double)simulation.rejected_clients / 100 << endl;
+    file << "ГЋГІГ­Г®Г±ГЁГІГҐГ«ГјГ­Г Гї ГЇГ°Г®ГЇГіГ±ГЄГ­Г Гї Г±ГЇГ®Г±Г®ГЎГ­Г®Г±ГІГј: " << (double)simulation.clients_served / 100 << endl;
+    file << "Г’ГҐГ®Г°ГҐГІГЁГ·ГҐГ±ГЄГЁГҐ Г°Г Г±Г·ГҐГІГ». " << endl;
+    file << "Г‚ГҐГ°Г®ГїГІГ­Г®Г±ГІГј Г®ГІГЄГ Г§Г : " << P_rej << endl;
+    file << "ГЋГІГ­Г®Г±ГЁГІГҐГ«ГјГ­Г Гї ГЇГ°Г®ГЇГіГ±ГЄГ­Г Гї Г±ГЇГ®Г±Г®ГЎГ­Г®Г±ГІГј: " << Q << endl;
+    file << "ГЂГЎГ±Г®Г«ГѕГІГ­Г Гї ГЇГ°Г®ГЇГіГ±ГЄГ­Г Гї Г±ГЇГ®Г±Г®ГЎГ­Г®Г±ГІГј: " << A << endl;
+    file << "Г‘Г°ГҐГ¤Г­ГҐГҐ Г·ГЁГ±Г«Г® Г§Г ГїГўГ®ГЄ Гў Г®Г·ГҐГ°ГҐГ¤ГЁ: " << L_q << std::endl;
 
     file.close();
 }
