@@ -28,7 +28,7 @@ TEST(Test3, ClientAdd) {
 TEST(Test4, Testing_CashChoose) {
     Shopping_mall mall2 = Shopping_mall(20);
     int number = Cash_Choose(&mall2, 2, 4);
-    EXPECT_EQ(num, 0);
+    EXPECT_EQ(number, 0);
 }
 
 TEST(Test5, Push_back_work) {
