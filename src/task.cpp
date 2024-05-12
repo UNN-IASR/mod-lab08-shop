@@ -79,7 +79,7 @@ void Tsum::Execute(int NumberCustomers) {
 
 void Tsum::OpenCassa() {
     while (isBusy || queue.size() != 0) {
-        //std::cout<<"1";
+        std::cout<<"1";
         int TimeClient;
         if (queue.size() == 0) continue;
         {std::lock_guard<std::mutex> lock(mutex);
