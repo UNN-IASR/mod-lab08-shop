@@ -21,16 +21,10 @@ public:
 class Shopping_mall {
 private:
     std::thread* Service;
-
-
     std::vector<std::vector
         <std::chrono::high_resolution_clock::time_point> > 
         time_spent_on_shoppers;
-
-
-
     std::vector<double> waiting_time;
-
 
 public:
     std::vector<Shopper> shoppers;
