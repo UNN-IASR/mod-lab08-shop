@@ -4,10 +4,10 @@
 #include <chrono>
 #include <vector>
 #include <thread>
-#include <numeric> // Для std::accumulate
-#include <iterator> // Для std::distance
+#include <numeric> // Г„Г«Гї std::accumulate
+#include <iterator> // Г„Г«Гї std::distance
 
-//Покупатель
+//РџРѕРєСѓРїР°С‚РµР»СЊ
 class Shopper {
 public:
     int shopper_number;
@@ -17,7 +17,7 @@ public:
     Shopper(int numb, int amount);
 };
 
-//Торговый центр или как по заданию супермаркет
+//РЎСѓРїРµСЂРјР°СЂРєРµСЂС‚
 class Shopping_mall {
 private:
     std::thread* Service;
@@ -60,7 +60,7 @@ public:
 void servicing(Shopping_mall& mall);
 
 
-//ПОПРАВИТЬ
+//ГЏГЋГЏГђГЂГ‚Г€Г’Гњ
 //int CashChoose(Cashier casses[], int cash_count, int max_queue)
 int Cash_Choose(Shopping_mall casses[], int cash_count, int max_queue);
 
