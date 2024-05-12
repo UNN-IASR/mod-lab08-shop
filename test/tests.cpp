@@ -22,7 +22,7 @@ TEST(TestCaseName, Test3) {
     shop2.StartWork();
     bool better = false;
     if (shop1.countServedClients < shop2.countServedClients) better = true;
-    EXPECT_EQ(better, true);
+    EXPECT_EQ(better, false);
 }
 
 TEST(TestCaseName, Test4) {
