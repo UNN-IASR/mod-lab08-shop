@@ -190,7 +190,7 @@ double Factorial_Recursive(int n) {
 double Degree(double num, int degree) {
 	if (degree == 0) return 1;
 	else if (degree > 0) return num * Degree(num, degree - 1);
-	else if (degree < 0) return 1 / Degree(num, -degree);
+	//else if (degree < 0) return 1 / Degree(num, -degree);
 }
 
 double Calculate_Average(std::vector<double> array) {
