@@ -187,14 +187,14 @@ double Factorial_Recursive(int n) {
 	else return 1;
 }
 
-double Calculate_Average(std::vector<double> array) {
-	double sum = std::accumulate(array.begin(), array.end(), 0.0);
-	double count = std::distance(array.begin(), array.end());
-	return sum / count;
-}
-
 double Degree(double num, int degree) {
 	if (degree == 0) return 1;
 	else if (degree > 0) return num * Degree(num, degree - 1);
 	else if (degree < 0) return 1 / Degree(num, -degree);
+}
+
+double Calculate_Average(std::vector<double> array) {
+	double sum = std::accumulate(array.begin(), array.end(), 0.0);
+	double count = std::distance(array.begin(), array.end());
+	return sum / count;
 }
