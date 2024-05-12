@@ -1,3 +1,4 @@
+// Copyright 2024 Shalnov_Yuri
 #include "Task.h"
 
 int main() {
