@@ -1,0 +1,16 @@
+cashbox_count = 5
+service_time = 3.0
+task_count = 300
+avg_task_delay = 1.0
+avg_task_complexity = 2.5
+queue_size = 5
+
+ --- Real --- 
+probability of denial : 0.453333
+relative throughput   : 0.546667
+absolute throughput   : 0.530786
+
+ --- Theoretical --- 
+probability of denial : 0.345348
+relative throughput   : 0.654652
+absolute throughput   : 0.654652
