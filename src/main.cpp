@@ -1,5 +1,5 @@
 // Copyright 2024 Yuriy Nazarov
-//#include <gtest/gtest.h>
+#include <gtest/gtest.h>
 #include <iostream>
 #include <random>
 #include <string>

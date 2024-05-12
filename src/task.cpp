@@ -12,6 +12,14 @@ Shop::Shop(int numOfCashRegisters, double intensityOfCustomerFlow,
         this->productProcessingSpeed = productProcessingSpeed;
         this->AverageNumberOfGoods = AverageNumberOfGoods;
         this->maxQueueLength = maxQueueLength;
+        allTime = 0;
+        countServedClients = 0;
+        countUnservedClients = 0;
+        avgQueueLength = 0;
+        avgTimeInQueue = 0;
+        avgServiceTime = 0;
+        avgWorkCashTime = 0;
+        avgWaitCashTime = 0;
         cashes = std::vector<Cash>(numOfCashRegisters);
         clientsQueue = std::queue<Client>();
         for (int i =0; i < numOfCashRegisters; i++){
