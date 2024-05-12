@@ -1,4 +1,4 @@
-// Copyright 2021 GHA Test Team
+// Copyright 2024 Shalnov_Yuri
 #include <gtest/gtest.h>
 #include <iostream>
 #include "Task.h"
