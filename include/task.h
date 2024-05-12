@@ -4,8 +4,8 @@
 #include <chrono>
 #include <vector>
 #include <thread>
-#include <numeric> // Äëÿ std::accumulate
-#include <iterator> // Äëÿ std::distance
+#include <numeric> // Для std::accumulate
+#include <iterator> // Для std::distance
 
 //Покупатель
 class Shopper {
@@ -17,7 +17,7 @@ public:
     Shopper(int numb, int amount);
 };
 
-//Супермаркерт
+//Торговый центр или как по заданию супермаркет
 class Shopping_mall {
 private:
     std::thread* Service;
@@ -60,7 +60,7 @@ public:
 void servicing(Shopping_mall& mall);
 
 
-//ÏÎÏÐÀÂÈÒÜ
+//ПОПРАВИТЬ
 //int CashChoose(Cashier casses[], int cash_count, int max_queue)
 int Cash_Choose(Shopping_mall casses[], int cash_count, int max_queue);
 
