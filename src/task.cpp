@@ -1,7 +1,7 @@
 //Copyright Annenko Misha 2024
-#include "task.h"
+#include "../include/task.h"
 
-//Покупатель
+//РџРѕР»СЊР·РѕРІР°С‚РµР»СЊ
 Shopper::Shopper(int amount, int numb) {
 	amount_of_products = amount;
 	shopper_number = numb;
@@ -14,7 +14,7 @@ Shopper::Shopper() {
 	transferred_to_cash = false;
 }
 
-//Торговый центр или как по заданию супермаркет
+//РЎСѓРїРµСЂРјР°СЂРєРµСЂС‚
 Shopping_mall::Shopping_mall(int ServiceTime) {
 	in_service = false;
 	service_time = ServiceTime;
@@ -47,7 +47,7 @@ bool Shopping_mall::Check_empty_shoppers() {
 
 void Shopping_mall::Pop_front_shoppers() {
 	if (Check_empty_shoppers() == true) {
-		throw std::runtime_error("Вектор клиентов пуст");
+		throw std::runtime_error("Г‚ГҐГЄГІГ®Г° ГЄГ«ГЁГҐГ­ГІГ®Гў ГЇГіГ±ГІ");
 	} else if (Check_empty_shoppers() == false) {
 		shoppers.erase(shoppers.begin());
 	}
@@ -179,11 +179,11 @@ int Cash_Choose(Shopping_mall array[], int money_count, int large_queue) {
 	return num;
 }
 
-//Взял функцию у себя из 7 лаборторной работы
+//Г‚Г§ГїГ« ГґГіГ­ГЄГ¶ГЁГѕ Гі Г±ГҐГЎГї ГЁГ§ 7 Г«Г ГЎГ®Г°ГІГ®Г°Г­Г®Г© Г°Г ГЎГ®ГІГ»
 double Factorial_Recursive(int n) {
-	//Рекурсивный вызов, при i != 0
+	//ГђГҐГЄГіГ°Г±ГЁГўГ­Г»Г© ГўГ»Г§Г®Гў, ГЇГ°ГЁ i != 0
 	if (n != 0) return n * Factorial_Recursive(n - 1);
-	//Базовый случай: факториал от 0 равен 1
+	//ГЃГ Г§Г®ГўГ»Г© Г±Г«ГіГ·Г Г©: ГґГ ГЄГІГ®Г°ГЁГ Г« Г®ГІ 0 Г°Г ГўГҐГ­ 1
 	else return 1;
 }
 
