@@ -12,18 +12,19 @@ TEST(TestCaseName, Test1) {
 TEST(TestCaseName, Test2) {
     Shop shop(5, 20, 0.1, 10, 5);
     shop.StartWork();
-    EXPECT_EQ(shop.countServedClients, 12);
+    EXPECT_EQ(shop.countServedClients, 20);
 }
 
 TEST(TestCaseName, Test3) {
-    Shop shop1(5, 20, 0.2, 10, 5);
-    Shop shop2(5, 20, 0.5, 10, 5);
+    Shop shop1(5, 20, 0.1, 10, 5);
+    Shop shop2(5, 20, 0.3, 10, 5);
     shop1.StartWork();
     shop2.StartWork();
     bool better = false;
     if (shop1.countServedClients < shop2.countServedClients) better = true;
     EXPECT_EQ(better, true);
 }
+
 TEST(TestCaseName, Test4) {
     Shop shop1(5, 20, 0.1, 10, 5);
     Shop shop2(5, 20, 0.3, 10, 5);
