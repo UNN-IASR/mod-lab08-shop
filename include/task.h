@@ -8,55 +8,58 @@
 #include <condition_variable>
 #include <iostream>
 
+
 class Buyer {
 public:
-  std::vector<int> products;
-  int number_of_items;
-  explicit Buyer(std::vector<int> items, int number);
+  std::vector<int> check;
+  int number;
+  explicit Buyer(std::vector<int> _check, int _number);
 };
 
 class Supermarket {
 private:
-  std::vector<std::thread*> checkout_threads;
-  std::queue<Buyer*> customer_queue;
-  std::vector<std::queue<Buyer*>*> register_queues;
+  std::vector<std::thread*> threads;
+  std::queue<Buyer*> buyerQueue;
+  std::vector<std::queue<Buyer*>*> cashRegisterQueues;
 
-  int register_count; 
-  int flow_rate; 
-  int processing_speed; 
-  int avg_items_per_customer; 
-  int max_queue_length; 
 
-  int max_price = 50;
-  int max_customers;
-  int customer_count = 0; 
+  int cashRegisterAmount; //количество касс(каналов обслуживания)
+  int flowRate; //интенсивность потока покупателей(заявки на обслуживание)
+  int processingSpeed; //скорость обработки товара на кассе
+  int averageNumberOfProducts; //среднее количество товаров в тележке покупателя
+  int maxQueueLength; //максимальная длина очереди
 
-  int served_customers = 0;  
-  double avg_queue_length = 0;  
-  double service_time = 0;  
-  double avg_checkout_working_time;  
-  double avg_checkout_idle_time;  
+  int maxPrice = 50;
+  int maxBuyers;
+  int countBuyers = 0; // покупатели
 
-  int working_checkout_count = 1;
-  int rejected_customers = 0;
+  int servedCustomers = 0;  //обслуженные покупатели
+  double averageQueueLength = 0;  //средняя длина очереди
+  double serviceTime = 0;  //среднее время нахождение покупателя в очереди + на кассе
+  double averageCashRegisterWorkingTime;  //среднее время работы кассы
+  double averageCashRegisterNotWorkingTime;  //среднее время простоя кассы
 
-  std::mutex market_mutex;
+  int workingCashRegisterCount = 1;
+  int refuseCount = 0;
+
+  std::mutex myMutex;
 public:
-  Supermarket(int registers, int flow_rate, int processing_speed, int avg_items, int max_length, int max_customers);
-  Buyer* create_customer(int number);
+  Supermarket(int cashRegisterAmount, int flowRate, int processingSpeed, int averageNumberOfProducts, int maxQueueLength, int _maxBuyers);
+  Buyer* createBuyer(int number);
   void run();
-  void serve_customer(Buyer* customer, int number);
-  void serve_queue(std::queue <Buyer*>* customers);
-  void serve_market();
+  void serveBuyer(Buyer* _buyer, int _number);
+  void serveQueue(std::queue <Buyer*>* _buyers);
+  void serveSupermarket();
 
-  int get_served_customers();
-  int get_unserved_customers();
-  double get_avg_queue_length();
-  double get_service_time();
-  double get_avg_checkout_working_time();
-  double get_avg_checkout_idle_time();
-  double rejection_probability();
-  double relative_throughput();
-  double absolute_throughput();
+  int getServedCustomers();
+  int getNotServedCustomers();
+  double getAverageQueueLength();
+  double getServiceTime();
+  double getAverageCashRegisterWorkingTime();
+  double getAverageCashRegisterNotWorkingTime();
+  double refuseProbability();
+  double relativeBandwidth();
+  double absoluteBandwidth();
   double factorial(double i);
 };
+
