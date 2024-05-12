@@ -1,5 +1,5 @@
 ﻿//Copyright Annenko Misha 2024
-#include "task.h"
+#include "../include/task.h"
 
 
 void Help_main() {
