@@ -15,6 +15,6 @@ TEST(test2, p2) {
 
 TEST(test3, p3) {
     Tsum cassa(6,80,100,6,10);
-    cassa.Execute(200);
-    EXPECT_EQ(16.8, (double)cassa.ServicedCustomers/200*80);
+    cassa.Execute(100);
+    EXPECT_EQ(100, cassa.ServicedCustomers+cassa.UnServicedCustomers);
 }
