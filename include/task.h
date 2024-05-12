@@ -6,6 +6,7 @@
 #include <thread>
 #include <numeric> // Для std::accumulate
 #include <iterator> // Для std::distance
+#include <cmath>
 
 //Покупатель
 class Shopper {
