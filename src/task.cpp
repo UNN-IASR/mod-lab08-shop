@@ -194,7 +194,7 @@ double Factorial_Recursive(int n) {
 	
 //}
 
-double _Degree(double num, int degree) {
+double Degree(double num, int degree) {
     double result = 1.0;
     for (int i = 0; i < degree; ++i) {
         result *= num;
