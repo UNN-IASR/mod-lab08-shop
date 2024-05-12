@@ -1,8 +1,6 @@
 #include "../include/task.h"
 
 int main() {
-    SetConsoleCP(1251);
-    SetConsoleOutputCP(1251);
     int CountCassa = 6;
     double IntensityCustomers = 80;
     int ProcessingSpeed = 100;

@@ -5,7 +5,6 @@
 #include <queue>
 #include <mutex>
 #include <map>
-#include <Windows.h>
 
 class Client {
     private:
