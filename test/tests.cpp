@@ -23,6 +23,6 @@ TEST(ShopTest, Simulation) {
 
 TEST(ShopTest, NoQueue) {
     Shop shop(3, 0, 45);
-    shop.Simulate(100, 25, 4)
+    shop.Simulate(100, 25, 4);
     EXPECT_EQ(shop.statistics.servedClients, 0);
 }
