@@ -16,7 +16,7 @@ TEST(CashRegisterTest, CashRegisterCreation) {
 
 TEST(ShopTest, Simulation) {
     Shop shop(3, 6, 45);
-    shop.Simulate(100, 25, 4)
+    shop.Simulate(100, 25, 4);
     EXPECT_EQ(shop.statistics.rejectedClients + shop.statistics.servedClients, 100);
     EXPECT_TRUE(shop.statistics.rejectedClients > 0);
 }
