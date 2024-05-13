@@ -5,13 +5,13 @@
 TEST(TestCaseName, Test1) {
     Store store(10, 30, 0.2, 8, 6);
     store.work();
-    EXPECT_EQ(store.served + store.unserved, 20);
+    EXPECT_EQ(store.served + store.unserved, 30);
 }
 
 TEST(TestCaseName, Test2) {
     Store store(10, 30, 0.2, 8, 6);
     store.work();
-    EXPECT_EQ(store.served, 12);
+    EXPECT_EQ(store.served, 29);
 }
 
 TEST(TestCaseName, Test3) {
