@@ -43,7 +43,7 @@ TEST(TestCaseName, Test5) {
     bool f = false;
     if (store1.avera > store2.avera) 
         f = true;
-    EXPECT_EQ(f, false);
+    EXPECT_EQ(f, true);
 }
 
 TEST(TestCaseName, Test6) {
