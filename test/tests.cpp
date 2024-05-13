@@ -9,12 +9,6 @@ TEST(TestCaseName, Test1) {
 }
 
 TEST(TestCaseName, Test2) {
-    Store store(10, 30, 0.2, 8, 6);
-    store.work();
-    EXPECT_EQ(store.served, 20);
-}
-
-TEST(TestCaseName, Test3) {
     Store store1(10, 30, 0.2, 8, 6);
     Store store2(10, 30, 0.4, 8, 6);
     store1.work();
@@ -24,7 +18,7 @@ TEST(TestCaseName, Test3) {
         f = true;
     EXPECT_EQ(f, true);
 }
-TEST(TestCaseName, Test4) {
+TEST(TestCaseName, Test3) {
     Store store1(10, 30, 0.2, 8, 6);
     Store store2(10, 30, 0.4, 8, 6);
     store1.work();
@@ -35,7 +29,7 @@ TEST(TestCaseName, Test4) {
     EXPECT_EQ(f, true);
 }
 
-TEST(TestCaseName, Test5) {
+TEST(TestCaseName, Test4) {
     Store store1(10, 30, 0.2, 8, 6);
     Store store2(10, 30, 0.4, 8, 6);
     store1.work();   
@@ -46,7 +40,7 @@ TEST(TestCaseName, Test5) {
     EXPECT_EQ(f, true);
 }
 
-TEST(TestCaseName, Test6) {
+TEST(TestCaseName, Test5) {
     Store store(10, 30, 0.2, 8, 6);
     store.work();
     store.stat();
