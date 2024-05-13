@@ -12,7 +12,7 @@ int main() {
     double productCashTime = 0.5; //скорость обработки товара на кассе
     double avgProducts = 1; //среднее количество товаров в тележке покупателя
     int maxQueueLength = 5; //максимальная длина очереди
-    int customers = 1000; //покупателей за смену
+    int customers = 100; //покупателей за смену
     Shop sh(cash, shoppersIntensity, productCashTime, avgProducts, maxQueueLength, customers);
     sh.run();
     std::cout << "served " << sh.statistic.served <<std::endl;

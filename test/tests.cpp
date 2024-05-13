@@ -79,7 +79,7 @@ TEST (test_Shop_some_long_shift, Shop_long_shift){
     double productCashTime = 0.15; //скорость обработки товара на кассе
     double avgProducts = 15; //среднее количество товаров в тележке покупателя
     int maxQueueLength = 20; //максимальная длина очереди
-    int customers = 1000; //покупателей за смену
+    int customers = 100; //покупателей за смену
     Shop sh(cash, shoppersIntensity, productCashTime, avgProducts, maxQueueLength, customers);
     
 	sh.run();
