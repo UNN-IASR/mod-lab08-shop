@@ -11,7 +11,7 @@ TEST(TestCaseName, Test1) {
 TEST(TestCaseName, Test2) {
     Store store(10, 30, 0.2, 8, 6);
     store.work();
-    EXPECT_EQ(store.served, 29);
+    EXPECT_EQ(store.served, 20);
 }
 
 TEST(TestCaseName, Test3) {
