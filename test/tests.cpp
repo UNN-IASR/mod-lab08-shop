@@ -16,7 +16,7 @@ TEST(test2, T2) {
 TEST(test3, T3) {
 	Shop shop(1, 20, 50, 5, 1);
 	shop.Run();
-	EXPECT_TRUE(shop.Av_lenght() <= 30);
+	EXPECT_TRUE(shop.Av_len() <= 30);
 }
 TEST(test4, T4) {
 	Shop shop(2, 10, 10, 9, 5);
