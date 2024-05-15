@@ -6,7 +6,7 @@
 TEST(test1, T1) {
 	Shop shop(2, 10, 50, 9, 5);
 	shop.Run();
-	EXPECT_TRUE(shop.Served() <= 10);
+	EXPECT_TRUE(shop.Served() >= 10);
 }
 TEST(test2, T2) {
 	Shop shop(2, 10, 10, 9, 5);
