@@ -16,7 +16,7 @@ TEST(TestCaseName, Test2) {
     bool f = false;
     if (store1.served < store2.served) 
         f = true;
-    EXPECT_EQ(f, true);
+    EXPECT_EQ(f,true);
 }
 TEST(TestCaseName, Test3) {
     Store store1(10, 30, 0.2, 8, 6);
