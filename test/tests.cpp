@@ -1,6 +1,6 @@
 // Copyright 2024 Kapochkin Mikhail
 #include <gtest/gtest.h>
-#include "task1.h"
+#include "../include/task.h"
 TEST(TestClient, ClientConstruct) {
     Client client(2, 8);
     EXPECT_EQ(client.id, 2);
