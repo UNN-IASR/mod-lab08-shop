@@ -21,6 +21,6 @@ TEST(SuperMarketTest, EmptyQueueFormed) {
 }
 
 TEST(CashMachineTest, CashMachineBusyState) {
-    CashRegister cashRegister(100);
-    EXPECT_FALSE(cashRegister.IsBusy());
+    CashMachine cashMachine(100);
+    EXPECT_FALSE(cashMachine.IsBusy());
 }
