@@ -14,10 +14,11 @@ TEST(SuperMarketTest, WorkFlowSim) {
     EXPECT_TRUE(market.statistic.rejClients = 0);
 }
 
-TEST(SuperMarketTest, EmptyQueueFormed) {
-    SuperMarket market(3, 0, 45);
+TEST(SuperMarketTest, WorkFlowSim) {
+    SuperMarket market(3, 6, 45);
     market.SimulateWork(100, 25, 4);
-    EXPECT_EQ(market.statistic.appClients, 0);
+    EXPECT_EQ(market.statistic.rejClients + market.statistic.appClients, 100);
+    EXPECT_TRUE(market.statistic.rejClients > 0);
 }
 
 TEST(CashMachineTest, CashMachineBusyState) {
