@@ -2,14 +2,14 @@
 #include "../include/task.h"
 
 TEST(TestCaseName, Test1) {
-    restore restore(6, 20, 0.3, 5, 4);
+    restore restore(12, 34, 0.3, 9, 7);
     restore.job();
     EXPECT_EQ(restore.ready + restore.unready, 30);
 }
 
 TEST(TestCaseName, Test2) {
-    restore restore1(12, 40, 0.3, 9, 7);
-    restore restore2(12, 40, 0.3, 9, 7);
+    restore restore1(12, 34, 0.3, 9, 7);
+    restore restore2(12, 34, 0.3, 9, 7);
     restore1.job();
     restore2.job();
     bool f = false;
@@ -18,8 +18,8 @@ TEST(TestCaseName, Test2) {
     EXPECT_EQ(f,true);
 }
 TEST(TestCaseName, Test3) {
-    restore restore1(12, 40, 0.3, 9, 7);
-    restore restore2(12, 40, 0.4, 9, 7);
+    restore restore1(12, 34, 0.3, 9, 7);
+    restore restore2(12, 34, 0.4, 9, 7);
     restore1.job();
     restore2.job();
     bool f = true;
@@ -29,8 +29,8 @@ TEST(TestCaseName, Test3) {
 }
 
 TEST(TestCaseName, Test4) {
-    restore restore1(12, 40, 0.3, 9, 7);
-    restore restore2(12, 40, 0.4, 9, 7);
+    restore restore1(12, 34, 0.3, 9, 7);
+    restore restore2(12, 34, 0.4, 9, 7);
     restore1.job();   
     restore2.job();
     bool f = false;
@@ -40,7 +40,7 @@ TEST(TestCaseName, Test4) {
 }
 
 TEST(TestCaseName, Test5) {
-    restore restore(12, 40, 0.3, 9, 7);
+    restore restore(12, 34, 0.3, 9, 7);
     restore.job();
     restore.stat();
     bool f = false;
