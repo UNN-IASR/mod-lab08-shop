@@ -42,7 +42,7 @@ class Cashbox {
 
 class Market {
     private:
-        static Product Products[];
+        static Product Products[5];
         bool isLoggingEnabled;
         std::mutex locker;
         std::thread producerThread;

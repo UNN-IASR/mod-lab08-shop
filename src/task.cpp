@@ -59,6 +59,13 @@ void Market::Initialize() {
     AvgCashboxWorkTime = 0;
     AvgCashboxFreeTime = 0;
 }
+Product Market::Products[5] = {
+    Product("Eggs", 6),
+    Product("Tomato", 8),
+    Product("Potato", 2),
+    Product("Chicken", 9),
+    Product("Fish", 11)
+};
 
 void Market::StartProducerThread(int clientsCount) {
     producerThread = std::thread([this, clientsCount](){ Produce(clientsCount); });
