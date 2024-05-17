@@ -1,69 +1,68 @@
 #include "../include/task.h"
 
-restore::restore(int num, double intens, double _speed, double aver, int lenght) {
-	cassa = num;
-	intens = intens;
-	speed_servis = _speed;
-	average = aver;
-	len = lenght;
-	clock = 0;
+Restore::Restore(int _num, double _intens, double _v, double _aver, int _len) {
+	num = _num;
+	intens = _intens;
+	v = _v;
+	aver = _aver;
+	len = _len;
+	watch = 0;
 	ready = 0;
 	unready = 0;
 	middle = 0;
-	waits = 0;
-	serves = 0;
+	expecting = 0;
+	servis = 0;
 
-	que = std::list<cli>();
-	cart = std::vector<cas>();
+	queue = std::list<Cli>();
+	basket = std::vector<Basket>();
 	thr = std::vector<std::thread*>();
 
-	for (int i = 0; i < cassa; i++) {
-		cart.push_back(cas());
-		cart[i].count = i;
-		cart[i].job = 0;
-		cart[i].expect = 0;
-		cart[i].f = true;
-		cart[i].begin = std::chrono::system_clock::now();
+	for (int i = 0; i < num; i++) {
+		basket.push_back(Basket());
+		basket[i].count = i;
+		basket[i].process = 0;
+		basket[i].keep = 0;
+		basket[i].f = true;
+		basket[i].begin = std::chrono::system_clock::now();
 	}
 }
 
-void restore::cass(int name, cli cust, double speed_servis) {
-	std::unique_lock<std::mutex> mute(mut);
+void Restore::cassa(int name, Cli cli, double speed) {
+	std::unique_lock<std::mutex> mut(mute);
 
-	cart[name].expect += std::chrono::duration_cast<std::chrono::milliseconds>
-		(std::chrono::system_clock::now() - cart[name].begin).count();
-	cart[name].job += cust.issues / speed_servis;
-	cust.serve = (int)(cust.issues / speed_servis);
+	basket[name].keep += std::chrono::duration_cast<std::chrono::milliseconds>
+		(std::chrono::system_clock::now() - basket[name].begin).count();
+	basket[name].process += cli.issues / v;
+	cli.serve = (int)(cli.issues / v);
 
-	std::this_thread::sleep_for(std::chrono::milliseconds((int)(cust.issues / speed_servis)));
+	std::this_thread::sleep_for(std::chrono::milliseconds((int)(cli.issues / v)));
 
-	cart[name].begin = std::chrono::system_clock::now();
-	cart[name].f = true;
+	basket[name].begin = std::chrono::system_clock::now();
+	basket[name].f = true;
 
-	mute.unlock();
+	mut.unlock();
 }
 
-void restore::job() {
-
-	tim = std::chrono::system_clock::now();
+void Restore::job() {
+	clock = std::chrono::system_clock::now();
 
 	srand(time(0));
 	int time = 0;
 	int news = rand() % 10 + 1;
-	int nums = 0;
+	int cou = 0;
 
 	while (true) {
-		if (nums < intens) {
+		if cou < intens) {
 			time++;
 			if (time == news) {
 				std::this_thread::sleep_for(std::chrono::milliseconds(10));
-				nums++;
-				cli cust;
-				cust.issues = rand() % (2 * (int)average) + 1;
-				cust.deque = std::chrono::system_clock::now();
+				cou++;
+				Cli cli;
+				cli.issues = rand() % (2 * (int)aver) + 1;
+				cli.deque = std::chrono::system_clock::now();
 
-				if (que.size() < len) {
-					que.push_front(cust);
+				if (queue.size() < len) {
+					queue.push_front(cli);
 				}
 				else {
 					unready++;
@@ -72,57 +71,50 @@ void restore::job() {
 			}
 		}
 
-		for (int i = 0; i < cassa; i++) {
-			if ((que.size() > 0) && (cart[i].f == true)) {
-				cart[i].f = false;
-				que.front().expect = std::chrono::duration_cast<std::chrono::milliseconds>
-					(std::chrono::system_clock::now() - que.front().deque).count();
+		for (int i = 0; i < num; i++) {
+			if ((queue.size() > 0) && (basket[i].f == true)) {
+				basket[i].f = false;
+				queue.front().keep = std::chrono::duration_cast<std::chrono::milliseconds>
+					(std::chrono::system_clock::now() - queue.front().deque).count();
 
-				thr.push_back(new std::thread(&restore::cass, this, i, que.front(), speed_servis));
+				thr.push_back(new std::thread(&Restore::cassa, this, i, queue.front(), v));
 
-				middle += que.size();
-				waits += que.front().expect;
-				serves += que.front().issues / speed_servis;
+				middle += queue.size();
+				expecting += queue.front().keep;
+				servis += queue.front().issues / v;
 				ready++;
-				que.pop_front();
+				queue.pop_front();
 			}
 		}
-		if (que.empty() && nums == intens)
+		if (queue.empty() && cou == intens)
 			break;
 	}
 	for (auto& th : thr)
 		th->join();
 
-	clock = std::chrono::duration_cast<std::chrono::microseconds>
-		(std::chrono::system_clock::now() - tim).count();
+	watch = std::chrono::duration_cast<std::chrono::microseconds>
+		(std::chrono::system_clock::now() - clock).count();
 }
 
-int fac(int n) {
-	if (n == 0)
-		return 1;
-	else
-		return n * fac(n - 1);
-}
-
-void restore::stat() {
+void Restore::stats() {
 	worked = 0;
 	waited = 0;
 
-	for (int i = 0; i < cassa; i++) {
-		worked += cart[i].job;
-		waited += cart[i].expect;
+	for (int i = 0; i < num; i++) {
+		worked += basket[i].process;
+		waited += basket[i].expect;
 	}
 
 	middle = middle / intens;
-	waits = waits / intens;
-	serves = serves / intens;
+	expecting = expecting / intens;
+	servis = servis / intens;
 
-	worked = worked / cassa;
-	waited = waited / cassa;
+	worked = worked / num;
+	waited = waited / num;
 
-	double l = intens / clock;
-	double m = (double)ready / clock;
-	double p = l / m;
+	double o = intens / watch;
+	double x = (double)ready / watch;
+	double z = o / x;
 
 	can = unready / intens;
 	skip = 1.0 - can;
