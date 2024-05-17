@@ -41,7 +41,7 @@ class Cashbox {
 };
 
 class Market {
-    private:
+    public:
         static Product Products[5];
         bool isLoggingEnabled;
         std::mutex locker;
@@ -68,7 +68,7 @@ class Market {
         void Finalize();
 
         Client GenerateClient();
-    public:
+    
         Market(int maxQueueLength,
                double clientsIntensity,
                int cashboxesCount,
