@@ -2,7 +2,7 @@
 #include "../include/task.h"
 
 TEST(TestCaseName, Test1) {
-    restore restore(12, 40, 0.3, 9, 7);
+    restore restore(6, 20, 0.3, 5, 4);
     restore.job();
     EXPECT_EQ(restore.ready + restore.unready, 30);
 }
