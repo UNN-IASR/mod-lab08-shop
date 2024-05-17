@@ -45,6 +45,8 @@ class Market {
         static Product Products[];
         bool isLoggingEnabled;
         std::mutex locker;
+        std::thread producerThread;
+        std::thread consumerThread;
         std::mutex queueLocker;
         int maxQueueLength;
         std::queue<Client> clientsQueue;
