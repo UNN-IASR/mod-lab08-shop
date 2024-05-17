@@ -19,7 +19,7 @@ int main() {
     const int timeToProcessProduct = 100;
     const double avgProductsInCart = 5.0;
 
-    // Calculating system parameters
+    // расчет параметров
     const double lambda = clientIntensity;
     const double mu = 1000.0 / timeToProcessProduct / avgProductsInCart;
     const double rho = mu / lambda;
@@ -34,18 +34,19 @@ int main() {
     }
 
     const double P_rej = std::pow(rho, cashboxesCount + queueLength) * P0
-                         / (std::pow(cashboxesCount, queueLength) * factorial(cashboxesCount));
+                         / (std::pow(cashboxesCount, queueLength) * 
+                         factorial(cashboxesCount));
     const double Q = 1 - P_rej;
     const double A = lambda * Q;
 
-    // Output system characteristics
+    // вывод характеристик системы
     std::cout << "Вероятность отказа: " << P_rej << std::endl;
     std::cout << "Относительная пропускная способность: "
               << Q << std::endl;
     std::cout << "Абсолютная пропускная способность: "
               << A << std::endl << std::endl;
 
-    // Simulating market
+    // маркет
     Market m(queueLength,
              clientIntensity,
              cashboxesCount,
@@ -55,15 +56,17 @@ int main() {
     m.EnableLogging();
     m.Simulate(clientsCount);
 
-    // Output simulation results
+    // вывод результатов
     std::cout << "Всего заявок: " << clientsCount << std::endl;
     std::cout << "Обработано заявок: " << m.ServedClients << std::endl;
     std::cout << "Отклонено заявок: " << m.RejectedClients << std::endl;
-    std::cout << "Вероятность отказа: " << static_cast<double>(m.RejectedClients) / clientsCount << std::endl;
+    std::cout << "Вероятность отказа: " << static_cast<double>(m.RejectedClients)
+    / clientsCount << std::endl;
     std::cout << "Относительная пропускная способность: "
               << static_cast<double>(m.ServedClients) / clientsCount << std::endl;
     std::cout << "Абсолютная пропускная способность: "
-              << static_cast<double>(m.ServedClients) / clientsCount * clientIntensity << std::endl;
+              << static_cast<double>(m.ServedClients) / 
+              clientsCount * clientIntensity << std::endl;
 
     return 0;
 }
