@@ -2,7 +2,6 @@
 
 #ifndef INCLUDE_TASK_H_
 #define INCLUDE_TASK_H_
-#endif  
 
 #include <vector>
 #include <string>
@@ -58,6 +57,13 @@ class Market {
         void Produce(int clientsCount);
         void Consume();
         void ProcessClient(const Client& client, Cashbox& cashbox);
+        
+        // Function declarations
+        void Initialize();
+        void StartProducerThread(int clientsCount);
+        void StartConsumerThread();
+        void JoinThreads();
+        void Finalize();
 
         Client GenerateClient();
     public:
@@ -78,3 +84,5 @@ class Market {
         void EnableLogging();
         void DisableLogging();
 };
+
+#endif  // INCLUDE_TASK_H_
