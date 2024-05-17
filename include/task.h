@@ -1,7 +1,8 @@
 // Copyright 2024 Mikhas3009
 
-#ifndef INCLUDE_MARKET_SIMULATOR_H
-#define INCLUDE_MARKET_SIMULATOR_H
+#ifndef INCLUDE_TASK_H_
+#define INCLUDE_TASK_H_
+#endif  
 
 #include <vector>
 #include <string>
