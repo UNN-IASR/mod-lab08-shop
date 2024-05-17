@@ -6,7 +6,7 @@
 #include <list>
 #include <cmath>
 
-class cli {
+class Cli{
 public:
 	int issues;
 	int expect;
@@ -14,43 +14,43 @@ public:
 	std::chrono::system_clock::time_point deque;
 };
 
-class cas {
+class Basket{
 public:
 	int count;
-	double job;
-	double expect;
+	double process;
+	double keep;
 	std::chrono::system_clock::time_point begin;
 	bool f;
 };
 
-class restore {
+class Restore {
 public:
-	int cassa;
+	int num;
 	double intens;
-	double speed_servis;
-	double average;
+	double v;
+	double aver;
 	int len;
 
-	std::mutex mut;
+	std::mutex mute;
 
-	std::list<cli> que;
-	std::vector<cas> cart;
+	std::list<Customer> queue;
+	std::vector<Cart> basket;
 	std::vector<std::thread*> thr;
 
-	restore(int num, double intens, double _speed, double aver, int lenght);
-	void cass(int name, cli cust, double speed_servis);
+	Restore(int _num, double _intens, double _v, double _aver, int _len);
+	void cassa(int name, Cli cli, double speed);
 	void job();
-	void stat();
+	void stats();
 
-	std::chrono::system_clock::time_point tim;
-	int clock;
+	std::chrono::system_clock::time_point clock;
+	int watch;
 
 	int ready;
 	int unready;
 
 	double middle;
-	double waits;
-	double serves;
+	double expecting;
+	double servis;
 	double worked;
 	double waited;
 
