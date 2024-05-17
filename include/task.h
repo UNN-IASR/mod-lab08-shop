@@ -33,8 +33,8 @@ public:
 
 	std::mutex mute;
 
-	std::list<Customer> queue;
-	std::vector<Cart> basket;
+	std::list<Cli> queue;
+	std::vector<Basket> basket;
 	std::vector<std::thread*> thr;
 
 	Restore(int _num, double _intens, double _v, double _aver, int _len);
