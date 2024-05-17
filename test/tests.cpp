@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include "../include/task.h"
 
-
 TEST(TestCaseName, Test1) {
     restore restore(12, 40, 0.3, 9, 7);
     restore.job();
