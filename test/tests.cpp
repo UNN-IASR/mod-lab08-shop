@@ -4,15 +4,15 @@
 
 TEST(TestCaseName, Test1) {
     restore restore(12, 40, 0.3, 9, 7);
-    restore.work();
-    EXPECT_EQ(store.ready + store.unready, 30);
+    restore.job();
+    EXPECT_EQ(restore.ready + restore.unready, 30);
 }
 
 TEST(TestCaseName, Test2) {
     restore restore1(12, 40, 0.3, 9, 7);
     restore restore2(12, 40, 0.3, 9, 7);
-    restore1.work();
-    restore2.work();
+    restore1.job();
+    restore2.job();
     bool f = false;
     if (restore1.ready < restore2.ready) 
         f = true;
@@ -21,8 +21,8 @@ TEST(TestCaseName, Test2) {
 TEST(TestCaseName, Test3) {
     restore restore1(12, 40, 0.3, 9, 7);
     restore restore2(12, 40, 0.4, 9, 7);
-    restore1.work();
-    restore2.work();
+    restore1.job();
+    restore2.job();
     bool f = true;
     if (restore1.ready > restore2.ready) 
         f = false;
@@ -32,8 +32,8 @@ TEST(TestCaseName, Test3) {
 TEST(TestCaseName, Test4) {
     restore restore1(12, 40, 0.3, 9, 7);
     restore restore2(12, 40, 0.4, 9, 7);
-    restore1.work();   
-    restore2.work();
+    restore1.job();   
+    restore2.job();
     bool f = false;
     if (restore1.middle > restore2.middle) 
         f = true;
@@ -42,7 +42,7 @@ TEST(TestCaseName, Test4) {
 
 TEST(TestCaseName, Test5) {
     restore restore(12, 40, 0.3, 9, 7);
-    restore.work();
+    restore.job();
     restore.stat();
     bool f = false;
     if (restore.can < 1) 
