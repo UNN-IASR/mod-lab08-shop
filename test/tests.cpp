@@ -1,7 +1,7 @@
 // Copyright 2021 Mikhas3009
 
 #include <gtest/gtest.h>
-#include "../include/task.h"
+#include "task.h"
 
 TEST(market, produce_clientAddedToQueue) {
     Market m(1, 1, 1, 1, 1);
