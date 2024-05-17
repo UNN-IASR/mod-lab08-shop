@@ -78,5 +78,3 @@ class Market {
         void EnableLogging();
         void DisableLogging();
 };
-
-#endif // INCLUDE_MARKET_SIMULATOR_H
