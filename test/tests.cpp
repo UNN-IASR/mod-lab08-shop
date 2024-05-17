@@ -1,5 +1,51 @@
-// Copyright 2021 GHA Test Team
 #include <gtest/gtest.h>
-#include "task1.h"
-#include "task2.h"
-#include "task3.h"
+#include "../include/task.h"
+
+
+TEST(TestCaseName, Test1) {
+    restore restore(12, 40, 0.3, 9, 7);
+    restore.work();
+    EXPECT_EQ(store.ready + store.unready, 30);
+}
+
+TEST(TestCaseName, Test2) {
+    restore restore1(12, 40, 0.3, 9, 7);
+    restore restore2(12, 40, 0.3, 9, 7);
+    restore1.work();
+    restore2.work();
+    bool f = false;
+    if (restore1.ready < restore2.ready) 
+        f = true;
+    EXPECT_EQ(f,true);
+}
+TEST(TestCaseName, Test3) {
+    restore restore1(12, 40, 0.3, 9, 7);
+    restore restore2(12, 40, 0.4, 9, 7);
+    restore1.work();
+    restore2.work();
+    bool f = true;
+    if (restore1.ready > restore2.ready) 
+        f = false;
+    EXPECT_EQ(f, true);
+}
+
+TEST(TestCaseName, Test4) {
+    restore restore1(12, 40, 0.3, 9, 7);
+    restore restore2(12, 40, 0.4, 9, 7);
+    restore1.work();   
+    restore2.work();
+    bool f = false;
+    if (restore1.middle > restore2.middle) 
+        f = true;
+    EXPECT_EQ(f, false);
+}
+
+TEST(TestCaseName, Test5) {
+    restore restore(12, 40, 0.3, 9, 7);
+    restore.work();
+    restore.stat();
+    bool f = false;
+    if (restore.can < 1) 
+        f = true;
+    EXPECT_EQ(f, true);
+}
