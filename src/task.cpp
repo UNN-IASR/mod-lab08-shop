@@ -31,7 +31,7 @@ Supermarket::Supermarket(int count_kass, int intensivnost_potoka_pokupatelei, in
 }
 void Supermarket::addclient(Client* client)
 {
-    if (clients.size() <= max_dlina_ocheredi+count_kass) {
+    if (clients.size() < max_dlina_ocheredi+count_kass) {
         clients.push(client);
         
         kol_obslug_clientov++;
