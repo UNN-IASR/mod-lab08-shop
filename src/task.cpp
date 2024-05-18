@@ -69,8 +69,8 @@ void Supermarket::work() {
     for (int i=0;i<7;i++)
     {
         int numClients = intensivnost_potoka_pokupatelei+5;
-        for (int i = 0; i < numClients; ++i) {
-            Client* newclient = new Client(srednee_kol_productov, skorost_obrabotki_tovara, (time+1)*2);
+        for (int i = 0; i < numClients; i++) {
+            Client* newclient = new Client(srednee_kol_productov, skorost_obrabotki_tovara, (time));
             addclient(newclient);
             std::this_thread::sleep_for(5ms);
             count_klient++;
