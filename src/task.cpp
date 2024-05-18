@@ -78,8 +78,7 @@ void Supermarket::work() {
             count_klient++;
         }
         std::vector<std::thread> threads;
-        int a = 1;
-        while (a != count_klient) {
+        while (clients.size() != 0) {
             for (auto& kassa : kassi) {
                 if (!clients.empty() && !kassa.polnaya) {
                     Client* client = clients.front();
@@ -87,14 +86,16 @@ void Supermarket::work() {
                     threads.push_back(std::thread([&kassa, client, &time]() {
                         kassa.obslugivanie(client);
                         }));
-                    time_v_ocheredi += time - client->time_v_ocheredi;
+                    kassa.polnaya = false;
+                    auto end0 = std::chrono::high_resolution_clock::now();
+                    total_time0 = (double)(end0 - start).count() / 1000000000;
+                    time_v_ocheredi += total_time0 - client->time_v_ocheredi;
                 }
                 else if (clients.empty() && !kassa.polnaya) {
                     vremya_ogidania += 1;
                     cout << "ddddh" << endl;
                 }
             }
-            a++;
         }
         for (auto& thread : threads) {
             if (thread.joinable()) {
