@@ -51,5 +51,6 @@ public:
 	void work();
 	void statistika();
 	double total_time;
+        double total_time0;
 	double ttime;
 };
