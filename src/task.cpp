@@ -21,11 +21,8 @@ void Kassa::obslugivanie(Client* client)
     endTime = std::chrono::steady_clock::now();
     polnaya = false;
     endTime = std::chrono::steady_clock::now();
-    //waittime = endTime;
-    
 }
 Supermarket::Supermarket(int count_kass, int intensivnost_potoka_pokupatelei, int skorost_obrabotki_tovara, int srednee_kol_productov, int max_dlina_ocheredi):kassi(count_kass) {
-    cout << "hhh" <<std::endl;
     this->count_kass = count_kass;
     this->intensivnost_potoka_pokupatelei = intensivnost_potoka_pokupatelei;
     this->skorost_obrabotki_tovara = skorost_obrabotki_tovara;
@@ -45,18 +42,20 @@ void Supermarket::addclient(Client* client)
     }
     else {
         delete client;
-        
         kol_neobslug_clientov++;
         count_klient--;
     }
 }
 void Supermarket::obrabativaem_ochered() {
-    for (auto& kassa : kassi)
-    {
-        if (!clients.empty() && !kassa.polnaya) {
-            Client* client = clients.front();
-            clients.pop();
-            kassa.obslugivanie(client);
+    while (clients.size()!=0) {
+        for (auto& kassa : kassi)
+        {
+            if (!clients.empty() && !kassa.polnaya) {
+                Client* client = clients.front();
+                clients.pop();
+                kassa.obslugivanie(client);
+                kassa.polnaya=false;
+            }
         }
     }
 }
@@ -111,7 +110,6 @@ void Supermarket::work() {
     }
 }
 void Supermarket::statistika() {
-    std::cout << "gggg" << std::endl;
     std::cout << "Neobslugennie pokupateli: " << kol_neobslug_clientov << std::endl;
     
     std::cout << "Obslugennii pokupateli " << kol_obslug_clientov << std::endl;
