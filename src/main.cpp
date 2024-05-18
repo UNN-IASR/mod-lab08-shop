@@ -13,18 +13,18 @@ long long factorial(long long n) {
 }
 double P0(int count_kass, double ro, int max_dlina_ocheredi) {
     double P0 = 0;
-    for (int i = 0; i <= pool_count; i++)
+    for (int i = 0; i <= count_kass; i++)
     {
-        P0 = P0 + pow(r, i) / factorial(i);
+        P0 = P0 + pow(ro, i) / factorial(i);
     }
-    for (int i = 1; i <= max_length; i++)
+    for (int i = 1; i <= max_dlina_ocheredi; i++)
     {
-        P0 = P0 + pow(r, pool_count + i) / (factorial(pool_count) * pow(pool_count, i));
+        P0 = P0 + pow(ro, count_kass + i) / (factorial(count_kass) * pow(count_kass, i));
     }
     return pow(P0, -1);
 };
 double Pn(int count_kass, double ro, double p0, int max_dlina_ocheredi) {
-    double Pn = pow(r, pool_count + max_length) / (factorial(pool_count) * pow(pool_count, max_length)) * P0;
+    double Pn = pow(ro, count_kass + max_dlina_ocheredi) / (factorial(count_kass) * pow(count_kass, max_dlina_ocheredi)) * p0;
     return Pn;
 };
 int main() {
