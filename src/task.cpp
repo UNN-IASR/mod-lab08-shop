@@ -121,8 +121,6 @@ void Supermarket::statistika() {
     double srednee_vremy_v_ocheredi = (double)time_v_ocheredi/ count_klient;
     double srednee_vremy_vezde = srednee_vremy_pokupki + srednee_vremy_v_ocheredi;
     std::cout << "Srednee vremya vezde " << srednee_vremy_vezde << std::endl;
-
-
     double t = 0;
     for (auto& kassa : kassi) {
         t += std::chrono::duration_cast<std::chrono::milliseconds>(kassa.endTime - kassa.startTime).count() / 1000;
@@ -144,7 +142,4 @@ void Supermarket::statistika() {
 
     //double absolt_propusk_sposobnost = otnositelnaya_propusknaya_sposobnost * intensivnost_potoka_pokupatelei;
     std::cout << "Absolutnaya propusknaya sposobnost " << kol_obslug_clientov/total_time<< std::endl;
-
-    std::cout << "total time: " << total_time << std::endl;
-    double rho = (double)intensivnost_potoka_pokupatelei / skorost_obrabotki_tovara;
 }
