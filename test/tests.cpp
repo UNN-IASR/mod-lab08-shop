@@ -45,7 +45,7 @@ TEST(SupermarketTest, Test6) {
     supermarket.obrabativaem_ochered();
     EXPECT_EQ(supermarket.clients.size(), 0);
 }
-TEST(SupermarketTest, Test6) {
+TEST(SupermarketTest, Test7) {
     Supermarket supermarket(3, 10, 2, 5, 10);
     std::vector<Client*> clients;
     for (int i = 0; i < 10; i++) {
