@@ -58,3 +58,30 @@ TEST(SupermarketTest, Test7) {
     supermarket.obrabativaem_ochered();
     EXPECT_EQ(supermarket.kol_obslug_clientov + supermarket.kol_neobslug_clientov, 10);
 }
+TEST(SupermarketTest, Test8) {
+    Supermarket supermarket(3, 10, 2, 5, 10);
+    std::vector<Client*> clients;
+    for (int i = 0; i < 10; i++) {
+        Client* client = new Client(5, 2, 3);
+        clients.push_back(client);
+    }
+    for (auto client : clients) {
+        supermarket.addclient(client);
+    }
+    supermarket.obrabativaem_ochered();
+    EXPECT_EQ(supermarket.kol_obslug_clientov, 10);
+}
+TEST(SupermarketTest, Test9) {
+    Supermarket supermarket(3, 10, 2, 5, 10);
+    std::vector<Client*> clients;
+    for (int i = 0; i < 10; i++) {
+        Client* client = new Client(5, 2, 3);
+        clients.push_back(client);
+    }
+    for (auto client : clients) {
+        supermarket.addclient(client);
+    }
+    supermarket.obrabativaem_ochered();
+    EXPECT_EQ(supermarket.kol_neobslug_clientov, 0);
+}
+
