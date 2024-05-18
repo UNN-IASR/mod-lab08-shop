@@ -10,7 +10,7 @@ TEST(KassaTest, Test2) {
     Client client(5, 2, 3);
     std::thread t1(&Kassa::obslugivanie, &kassa, &client);
     t1.join();
-    EXPECT_TRUE(kassa.polnaya = false);//так как сразу после обслуживания она становится false
+    EXPECT_FALSE(kassa.polnaya);//так как сразу после обслуживания она становится false
 }
 TEST(SupermarketTest, Test3) {
     Supermarket supermarket1(3, 10, 2, 5, 10);
