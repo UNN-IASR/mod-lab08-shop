@@ -32,3 +32,29 @@ TEST(SupermarketTest, Test5) {
     EXPECT_EQ(supermarket1.srednee_kol_productov, 5);
     EXPECT_EQ(supermarket1.max_dlina_ocheredi, 10);
 }
+TEST(SupermarketTest, Test6) {
+    Supermarket supermarket(3, 10, 2, 5, 10);
+    std::vector<Client*> clients;
+    for (int i = 0; i < 10; i++) {
+        Client* client = new Client(5, 2, 3);
+        clients.push_back(client);
+    }
+    for (auto client : clients) {
+        supermarket.addclient(client);
+    }
+    supermarket.obrabativaem_ochered();
+    EXPECT_EQ(supermarket.clients.size(), 0);
+}
+TEST(SupermarketTest, Test6) {
+    Supermarket supermarket(3, 10, 2, 5, 10);
+    std::vector<Client*> clients;
+    for (int i = 0; i < 10; i++) {
+        Client* client = new Client(5, 2, 3);
+        clients.push_back(client);
+    }
+    for (auto client : clients) {
+        supermarket.addclient(client);
+    }
+    supermarket.obrabativaem_ochered();
+    EXPECT_EQ(supermarket.kol_obslug_clientov + supermarket.kol_neobslug_clientov, 10);
+}
