@@ -60,7 +60,6 @@ void Supermarket::obrabativaem_ochered() {
     }
 }
 void Supermarket::work() {
-
     std::random_device rd;
     std::mt19937 gen(rd());
     std::exponential_distribution<> arrivalTime(intensivnost_potoka_pokupatelei);
@@ -88,11 +87,10 @@ void Supermarket::work() {
                     kassa.polnaya = false;
                     auto end0 = std::chrono::high_resolution_clock::now();
                     total_time0 = (double)(end0 - start).count() / 1000000000;
-                    time_v_ocheredi += total_time0 - client->time_v_ocheredi;
+                    time_v_ocheredi += total_time0 - client->time_obslugivania;
                 }
-                else if (clients.empty() && !kassa.polnaya) {
+                else if (!clients.empty() && kassa.polnaya) {
                     vremya_ogidania += 1;
-                    cout << "ddddh" << endl;
                 }
             }
         }
@@ -123,7 +121,7 @@ void Supermarket::statistika() {
     std::cout << "Srednee vremya vezde " << srednee_vremy_vezde << std::endl;
     double t = 0;
     for (auto& kassa : kassi) {
-        t += std::chrono::duration_cast<std::chrono::milliseconds>(kassa.endTime - kassa.startTime).count() / 1000;
+        t += std::chrono::duration_cast<std::chrono::milliseconds>(kassa.endTime - kassa.startTime).count();
     }
     double obslug = static_cast<double>(t) / 1000.0;
     double averageWorkTimePerCassa = obslug / count_kass;
