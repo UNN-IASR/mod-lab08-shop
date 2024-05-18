@@ -11,7 +11,7 @@ long long factorial(long long n) {
     }
     return fact;
 }
-double calculate_P0(int pool_count, double r, int max_length) {
+double P0(int count_kass, double ro, int max_dlina_ocheredi) {
     double P0 = 0;
     for (int i = 0; i <= pool_count; i++)
     {
@@ -23,7 +23,7 @@ double calculate_P0(int pool_count, double r, int max_length) {
     }
     return pow(P0, -1);
 };
-double calculate_Pn(int pool_count, double r, double P0, int max_length) {
+double Pn(int count_kass, double ro, double p0, int max_dlina_ocheredi) {
     double Pn = pow(r, pool_count + max_length) / (factorial(pool_count) * pow(pool_count, max_length)) * P0;
     return Pn;
 };
@@ -37,10 +37,10 @@ int main() {
     supermarket.work();
     supermarket.statistika();
     double ro = intensivnost_potoka_pokupatelei * srednee_kol_productov / skorost_obrabotki_tovara;
-    double p0 = calculate_P0(count_kass, ro, max_dlina_ocheredi);
-    double failureProbability = calculate_Pn(count_kass, ro, p0, max_dlina_ocheredi);
-    std::cout << "veroyatnost otkaza formula " << failureProbability << endl;
-    std::cout << "Otnositelnaya propusknaya sposobnost " << 1 - failureProbability << std::endl;
-    std::cout << "Absolutnaya propusknaya sposobnost " << intensivnost_potoka_pokupatelei * (1-failureProbability) << std::endl;
+    double p0 = P0(count_kass, ro, max_dlina_ocheredi);
+    double padenie = Pn(count_kass, ro, p0, max_dlina_ocheredi);
+    std::cout << "veroyatnost otkaza formula " << padenie << endl;
+    std::cout << "Otnositelnaya propusknaya sposobnost " << 1 - padenie << std::endl;
+    std::cout << "Absolutnaya propusknaya sposobnost " << intensivnost_potoka_pokupatelei * (1-padenie) << std::endl;
     return 0;
 }
