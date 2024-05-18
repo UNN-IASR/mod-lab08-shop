@@ -9,10 +9,6 @@
 using namespace std;
 class Client {
 public:
-	//int nomer_clienta;
-	//int products;
-	//Client(int nomer_clienta, int products);
-	//Client(int products);
 	std::vector<int> products;
 	int time_obslugivania;
 	double time_v_ocheredi;
@@ -20,43 +16,17 @@ public:
 };
 class Kassa {
 public:
-	
-	/*int count_kass;
-	int intensivnost_potoka_pokupatelei;
-	int skorost_obrabotki;
-	int srednee_kolichestvo_tovarov;
-	int maxim_dlina_ocheredi;*/
-
 	std::queue<Client*> ochered_clientov;
-
-	//Kassa() {};
-	/*Kassa() {
-		// Копируйте необходимые данные из other в текущий объект
-		ochered_clientov = this->ochered_clientov;
-		polnaya = this->polnaya;
-		totalCustomers = this->totalCustomers;
-		totalServiceTime = this->totalServiceTime;
-		totalIdleTime = this->totalIdleTime;
-	}*/
-	//std::queue<Client*> ochered_clientov;
 	std::mutex mtx;
 	bool polnaya = false;
 	int totalCustomers = 0;
-	
 	std::chrono::time_point<std::chrono::steady_clock> startTime;
 	std::chrono::time_point<std::chrono::steady_clock> endTime;
-	std::chrono::time_point<std::chrono::steady_clock> waittime;
-	//double waittime; // Общее время ожидания клиентов, обслуженных этой кассой
-	//Kassa() : waittime(0) {} // Инициализация totalWaitTime в конструкторе
-	//int totalIdleTime = 0;
-
+	//std::chrono::time_point<std::chrono::steady_clock> waittime;
 	void obslugivanie(Client* client);
-	//void add(Client* client);
-	//void work();
 };
 class Supermarket {
 public:
-	//int count_kass=0;
 	std::vector<Kassa>kassi;
 	std::queue<Client*>clients;
 	int polnoe_vremya_obslugivania = 0;
@@ -75,7 +45,6 @@ public:
 	int time_v_kasse = 0;
 	int time_v_ocheredi = 0;
 	double srednya_dlina_ocheredi;
-	//Supermarket(int count_kass) :kassi(count_kass) {};
 	Supermarket(int count_kass, int intensivnost_potoka_pokupatelei, int skorost_obrabotki_tovara, int srednee_kol_productov, int max_dlina_ocheredi);
 	void addclient(Client* client);
 	void obrabativaem_ochered();
