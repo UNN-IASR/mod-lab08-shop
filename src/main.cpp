@@ -1,4 +1,4 @@
-#include "task.h"
+#include "../include/task.h"
 #include <iostream>
 
 using namespace std;
@@ -21,7 +21,7 @@ int main()
     double avgProductsInCart = 5;
     double maxQueue = 5;
     double lambda = clientIntensity;
-    double mu = 1000.0 / processingSpeedProducts / avgProductsInCart; // стреднее время обслуживания клиента
+    double mu = 1000.0 / processingSpeedProducts / avgProductsInCart; // Г±ГІГ°ГҐГ¤Г­ГҐГҐ ГўГ°ГҐГ¬Гї Г®ГЎГ±Г«ГіГ¦ГЁГўГ Г­ГЁГї ГЄГ«ГЁГҐГ­ГІГ 
     double p = mu / lambda;
     double P0 = 1;
     for (int i = 1; i <= numberCash; i++)
@@ -36,10 +36,10 @@ int main()
         / (pow(numberCash, maxQueue) * factorial(numberCash));
     double Q = 1 - P_rej;
     double A = lambda * Q;
-    cout << "Вероятность отказа: " << P_rej << endl;
-    cout << "Относительная пропускная способность: "
+    cout << "Г‚ГҐГ°Г®ГїГІГ­Г®Г±ГІГј Г®ГІГЄГ Г§Г : " << P_rej << endl;
+    cout << "ГЋГІГ­Г®Г±ГЁГІГҐГ«ГјГ­Г Гї ГЇГ°Г®ГЇГіГ±ГЄГ­Г Гї Г±ГЇГ®Г±Г®ГЎГ­Г®Г±ГІГј: "
         << Q << endl;
-    cout << "Абсолютная пропускная способность: "
+    cout << "ГЂГЎГ±Г®Г«ГѕГІГ­Г Гї ГЇГ°Г®ГЇГіГ±ГЄГ­Г Гї Г±ГЇГ®Г±Г®ГЎГ­Г®Г±ГІГј: "
         << A << endl << endl;
     Shop s(maxQueue,
         clientIntensity,
@@ -48,13 +48,13 @@ int main()
         avgProductsInCart);
     s.EnableLogging();
     s.Simulate(clientsCount);
-    cout << "Всего заявок: " << clientsCount << endl;
-    cout << "Обработано заявок: " << s.ServedClients << endl;
-    cout << "Отклонено заявок: " << s.RejectedClients << endl;
-    cout << "Вероятность отказа: " << (double)s.RejectedClients / clientsCount << endl;
-    cout << "Относительная пропускная способность: "
+    cout << "Г‚Г±ГҐГЈГ® Г§Г ГїГўГ®ГЄ: " << clientsCount << endl;
+    cout << "ГЋГЎГ°Г ГЎГ®ГІГ Г­Г® Г§Г ГїГўГ®ГЄ: " << s.ServedClients << endl;
+    cout << "ГЋГІГЄГ«Г®Г­ГҐГ­Г® Г§Г ГїГўГ®ГЄ: " << s.RejectedClients << endl;
+    cout << "Г‚ГҐГ°Г®ГїГІГ­Г®Г±ГІГј Г®ГІГЄГ Г§Г : " << (double)s.RejectedClients / clientsCount << endl;
+    cout << "ГЋГІГ­Г®Г±ГЁГІГҐГ«ГјГ­Г Гї ГЇГ°Г®ГЇГіГ±ГЄГ­Г Гї Г±ГЇГ®Г±Г®ГЎГ­Г®Г±ГІГј: "
         << (double)s.ServedClients / clientsCount << endl;
-    cout << "Абсолютная пропускная способность: "
+    cout << "ГЂГЎГ±Г®Г«ГѕГІГ­Г Гї ГЇГ°Г®ГЇГіГ±ГЄГ­Г Гї Г±ГЇГ®Г±Г®ГЎГ­Г®Г±ГІГј: "
         << (double)s.ServedClients / clientsCount * clientIntensity << endl;
     return 0;
 }
