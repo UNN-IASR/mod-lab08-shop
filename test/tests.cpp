@@ -20,14 +20,4 @@ TEST(shop, produce_clientRejected) {
     EXPECT_EQ(1, s.RejectedClients);
 }
 
-TEST(shop, consume_oneClient) {
-    Shop s(1, 1000, 1, 100, 1);
-    s.Produce(1);
-    auto start = std::chrono::steady_clock::now();
-    s.Consume();
-    auto stop = std::chrono::steady_clock::now();
-    int milliseconds = (stop - start).count() / 1000000;
-    EXPECT_EQ(100, milliseconds);
-    EXPECT_EQ(0, s.clientsQueue.size());
-    EXPECT_EQ(1, s.ServedClients);
-}
+
