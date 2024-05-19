@@ -1,4 +1,4 @@
-#include "task.h"
+#include "../include/task.h"
 
 Shop::Shop(int maxQueue,
     double clientsIntensity,
@@ -40,8 +40,8 @@ void Shop::Produce(int clientsCount) {
         auto client = GenerateClient();
         client.Id = i;
         if (isLoggingEnabled) {
-            std::cout << "Ñãåíåðèðîâàí êëèåíò " << client.Id
-                << "(Ïðîäóêòîâ: " << client.Cart << ")"
+            std::cout << "Ã‘Ã£Ã¥Ã­Ã¥Ã°Ã¨Ã°Ã®Ã¢Ã Ã­ ÃªÃ«Ã¨Ã¥Ã­Ã² " << client.Id
+                << "(ÃÃ°Ã®Ã¤Ã³ÃªÃ²Ã®Ã¢: " << client.Cart << ")"
                 << std::endl;
         }
         queueLocker.lock();
@@ -84,8 +84,8 @@ void Shop::Consume() {
                     std::ref(client),
                     std::ref(cash[i]));
                 if (isLoggingEnabled) {
-                    std::cout << "Îáñëóæèâàíèå êëèåíòà "
-                        << client.Id << "(Ïîòîê: "
+                    std::cout << "ÃŽÃ¡Ã±Ã«Ã³Ã¦Ã¨Ã¢Ã Ã­Ã¨Ã¥ ÃªÃ«Ã¨Ã¥Ã­Ã²Ã  "
+                        << client.Id << "(ÃÃ®Ã²Ã®Ãª: "
                         << threadPool[i].get_id() << ")" << std::endl;
                 }
             }
