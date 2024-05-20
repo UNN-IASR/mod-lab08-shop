@@ -47,7 +47,7 @@ TEST (test_Shopper_lifetime, Shopper_life_clock) {
 
 //По какой-то причине git уходит на 6ти часовую попытку запустить магазин, хотя локально на эти тесты уходит едва ли больше 5ти секунд...
 
-/* TEST (tets_Shop_all_served, Shop_100) {
+TEST (tets_Shop_all_served, Shop_100) {
     int cash = 10; //количество касс (каналов обслуживания)
     double shoppersIntensity = 6; //интенсивность потока покупателей (заявки на обслуживание)
     double productCashTime = 0.5; //скорость обработки товара на кассе
@@ -87,4 +87,4 @@ TEST (test_Shop_some_long_shift, Shop_long_shift){
     sh.run();
 
     ASSERT_TRUE(sh.statistic.served > 0);
-} */
+}
