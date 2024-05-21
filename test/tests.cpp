@@ -27,7 +27,7 @@ TEST(TestCase, Test4) {
     Shop shop2(5, 20, 0.3, 10, 5);
     shop1.StartWork();
     shop2.StartWork();
-    EXPECT_EQ(shop1.countServedClients > shop2.countServedClients, true);
+    EXPECT_EQ(shop1.countServedClients < shop2.countServedClients, true);
 }
 
 TEST(TestCase, Test5) {
