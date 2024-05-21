@@ -24,20 +24,20 @@ int main() {
         avgWaitCashTime += shop.cashes[i].waitTime;
     }
 
-    double avgQueueLength = queueLength / shop.buyerArrivalIntensity;
-    double avgTimeInQueue = timeInQueue / shop.buyerArrivalIntensity;
-    double avgServiceTime = serviceTime / shop.buyerArrivalIntensity;
+    double avgQueueLength = shop.queueLength / shop.buyerArrivalIntensity;
+    double avgTimeInQueue = shop.timeInQueue / shop.buyerArrivalIntensity;
+    double avgServiceTime = shop.serviceTime / shop.buyerArrivalIntensity;
 
     avgWorkCashTime /= shop.numOfCashRegisters;
     avgWaitCashTime /= shop.numOfCashRegisters;
 
-    double la = shop.buyerArrivalIntensity / allTime;
-    double mu = (double)shop.countServedClients / allTime;
+    double la = shop.buyerArrivalIntensity / shop.allTime;
+    double mu = (double)shop.countServedClients / shop.allTime;
     double p = la / mu;
 
-    double pPn = countUnservedClients / buyerArrivalIntensity;
-    double pQ = 1.0 - P;
-    double pA = la * Q;
+    double pPn = shop.countUnservedClients / shop.buyerArrivalIntensity;
+    double pQ = 1.0 - pPn;
+    double pA = la * pQ;
 
     double P0 = 1.0;
     for (int i = 1; i <= shop.numOfCashRegisters; i++) {
@@ -47,9 +47,9 @@ int main() {
         P0 = P0 + pow(p, i) / (factorial(shop.numOfCashRegisters) * pow(shop.numOfCashRegisters, i - shop.numOfCashRegisters));
     }
     P0 = 1.0 / P0;
-    tPn = P0 * pow(p, (shop.numOfCashRegisters + shop.maxQueueLength)) / (double)(pow(shop.numOfCashRegisters, shop.maxQueueLength) * factorial(shop.numOfCashRegisters));
-    tQ = 1.0 - P;
-    tA = la * Q;
+    double tPn = P0 * pow(p, (shop.numOfCashRegisters + shop.maxQueueLength)) / (double)(pow(shop.numOfCashRegisters, shop.maxQueueLength) * factorial(shop.numOfCashRegisters));
+    double tQ = 1.0 - tPn;
+    double tA = la * tQ;
 
     std::cout << "Обслуженные покупатели: " << shop.countServedClients << std::endl;
     std::cout << "Необслуженные покупатели: " << shop.countUnservedClients << std::endl << std::endl;
