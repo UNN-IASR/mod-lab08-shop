@@ -3,7 +3,7 @@
 #include "task1.h"
 #include "task2.h"
 #include "task3.h"
-#include "../include/Shop.h"
+#include "../include/task.h"
 TEST(TestCase, Test1) {
     Shop shop(1,1,1);
     shop.cahs.AddNewClient(1, 1);
