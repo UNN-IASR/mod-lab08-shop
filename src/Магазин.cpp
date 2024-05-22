@@ -1,6 +1,6 @@
 ﻿// Магазин.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
 //
-#include "Shop.h"
+#include "../include/Shop.h"
 #include <iostream>
 #include <thread>
 #include <iostream>
