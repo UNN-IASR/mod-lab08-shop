@@ -44,7 +44,7 @@ void Shop::run(){
     std::cout << "incoming flow working" << std::endl;
     while (this->customersVisited < this->customers){
         std::cout << "tick" << std::endl;
-        if (!this->queue.empty()){
+        if (this->queue.size() != 0){
             std::cout << "tack" << std::endl;
             for (int i = 0; i < isBusy.size(); i++){
                 if (!isBusy[i]) {
