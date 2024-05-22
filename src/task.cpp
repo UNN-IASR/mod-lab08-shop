@@ -37,6 +37,7 @@ Shop::~Shop()
 }
 
 void Shop::run(){
+    std::cout << "starting shop";
     std::mutex rm;
     this->statistic.openCash(this->cash);
     std::thread incoming (&Shop::incomingCustomers, this);
@@ -49,6 +50,7 @@ void Shop::run(){
                     isBusy[i] = true;
                     rm.unlock();
                     if (cashiers[i].joinable()) cashiers[i].join();
+                    std::cout << "customer sent to " << i << " cash";
                     std::thread t(&Shop::productProcessing, this, this->queue.front(), i);
                     cashiers[i] = std::move(t);
                     rm.lock();
@@ -61,14 +63,17 @@ void Shop::run(){
         this->statistic.sumLengths += queue.size();
         this->statistic.countLenghts ++;
     }
+    std::cout << "closing shop";
     for (int i = 0; i < cashiers.size(); i++){
         if (cashiers[i].joinable()) cashiers[i].join();
     }
     if (incoming.joinable()) incoming.join();
     this->statistic.calcResults();
+    std::cout << "shop closed";
 }
 
 void Shop::incomingCustomers(){
+    std::cout << "customers thread started";
     std::mutex im;
     std::random_device rd{};
     std::mt19937 gen{rd()};
@@ -95,9 +100,11 @@ void Shop::incomingCustomers(){
             this->statistic.rejected ++;
         }
     }
+    std::cout << "customers thread ended";
 }
 
 void Shop::productProcessing(Shopper s, int id){
+    std::cout << "customer come to " << id << " cash";
     std::mutex pm;
     std::this_thread::sleep_for(std::chrono::milliseconds((int)round(s.products * productCashTime * 1000)));
     pm.lock();
@@ -105,6 +112,7 @@ void Shop::productProcessing(Shopper s, int id){
     this->isBusy[id] = false;
     this->statistic.lifeTimes.push_back(s.lifeTime());
     pm.unlock();
+    std::cout << "customer finished in " << id << " cash";
 }
 
 Stats::Stats()
