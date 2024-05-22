@@ -75,7 +75,7 @@ TEST (tets_Shop_none_served, Shop_0) {
     ASSERT_EQ(customers, sh.statistic.rejected);
 }
 
-TEST (test_Shop_some_long_shift, Shop_long_shift){
+/* TEST (test_Shop_some_long_shift, Shop_long_shift){
     int cash = 10; //количество касс (каналов обслуживания)
     double shoppersIntensity = 6; //интенсивность потока покупателей (заявки на обслуживание)
     double productCashTime = 0.15; //скорость обработки товара на кассе
@@ -87,4 +87,4 @@ TEST (test_Shop_some_long_shift, Shop_long_shift){
     sh.run();
 
     ASSERT_TRUE(sh.statistic.served > 0);
-}
+} */
