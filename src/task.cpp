@@ -43,7 +43,9 @@ void Shop::run(){
     std::thread incoming (&Shop::incomingCustomers, this);
     std::cout << "incoming flow working" << std::endl;
     while (this->customersVisited < this->customers){
+        std::cout << "tick" << std::endl;
         if (!this->queue.empty()){
+            std::cout << "tack";
             for (int i = 0; i < isBusy.size(); i++){
                 if (!isBusy[i]) {
                     rm.lock();
