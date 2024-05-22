@@ -1,3 +1,4 @@
+// Copyright 2024 MISha
 #pragma once
 #include <vector>
 #include <queue>
