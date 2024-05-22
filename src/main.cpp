@@ -1,7 +1,9 @@
 #include <iostream>
-using namespace std;
+#include "task.cpp"
 
 int main()  { 
-    cout << "Hello, world!" << endl;
+    Shop_working shop_working(6, 10, 5, 15, 0);
+    shop_working.Start_sim(10);
+    std::cout << "MAIN FINISH!!!😐";
     return 0; 
 }
