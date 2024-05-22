@@ -5,39 +5,30 @@
 #include <string>
 #include <mutex>
 #include <random>
-#include <queue>
 #include <condition_variable>
 
 class Shop_working;
 class Buyer;
 class Shop;
 
-struct CashRegister {
-    public: 
-        bool in_use;
-        std::thread thr;
-};
-
 class Shop {
     private:
+        int num_of_sales_reg;
         int cash_register_delay;
         int max_queue_size;
         int processing_now;
         int in_queue_now;
         std::mutex mtx_shop;
         std::condition_variable noty;
-        std::mutex proc_mtx;
+        std::vector<std::thread> all_buyers;
     public:
-        bool is_all_cash_reg_full;
-        std::vector<CashRegister> pool_of_cash_register;
-        int num_of_sales_reg;
         int requestCount = 0;
         int processedCount = 0;
         int rejectedCount = 0;
-        Shop() {};
         Shop (int num, int cash_register_intensity, int queue_size);
         void Processing(Buyer buyer);
-        void Work_in_thread(Buyer buyer, int flag);
+        void Work_in_thread(Buyer buyer);
+        void Work_in_queue_thread(Buyer buyer);
         void Join();
 };
 
