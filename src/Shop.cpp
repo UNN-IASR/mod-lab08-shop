@@ -1,4 +1,4 @@
-#include "Shop.h"
+#include "../include/Shop.h"
 #include <thread>
 #include <iostream>
 #include <chrono>
@@ -22,10 +22,10 @@ int Shop::SumJopTimeCassa=0;
 int Shop::CountJopCassa=0;
 void Shop::AddNewClient(int NumberProduct,int NameClient)
 {
-    std::cout << "Client "<<NameClient<<" Ïðèøåë êëèåíò\n";
+    std::cout << "Client "<<NameClient<<" ÃÃ°Ã¨Ã¸Ã¥Ã« ÃªÃ«Ã¨Ã¥Ã­Ã²\n";
     if (NumbetThread < numberCash&&clientQueue.size()==0)
     {
-        std::cout << "Client " << NameClient << " Ñâîáîäíàÿ êàññà\n";
+        std::cout << "Client " << NameClient << " Ã‘Ã¢Ã®Ã¡Ã®Ã¤Ã­Ã Ã¿ ÃªÃ Ã±Ã±Ã \n";
         MyThread myThread(NumberProduct,NameClient);
         NumbetThread++;
         Buy++;
@@ -33,19 +33,19 @@ void Shop::AddNewClient(int NumberProduct,int NameClient)
     }
     if (NumbetThread == numberCash && clientQueue.size() >= 0 && clientQueue.size() < maxQueue)
     {
-        std::cout << "Client " << NameClient << " Äîáàâèëè â î÷åðåäü\n";
+        std::cout << "Client " << NameClient << " Ã„Ã®Ã¡Ã Ã¢Ã¨Ã«Ã¨ Ã¢ Ã®Ã·Ã¥Ã°Ã¥Ã¤Ã¼\n";
         clientQueue.push(NumberProduct);
         SumLeightQueu.push_back(clientQueue.size());
         return;
     }
-    std::cout << "Client " << NameClient << " Ïðîãîíÿåì êëèåíòà\n";
+    std::cout << "Client " << NameClient << " ÃÃ°Ã®Ã£Ã®Ã­Ã¿Ã¥Ã¬ ÃªÃ«Ã¨Ã¥Ã­Ã²Ã \n";
     NotBuy++;
 }
 void Shop::NextClient()
 {
     if (clientQueue.size() > 0)
     {
-        std::cout << "Âûòàùèëè èç î÷åðåäè\n";
+        std::cout << "Ã‚Ã»Ã²Ã Ã¹Ã¨Ã«Ã¨ Ã¨Ã§ Ã®Ã·Ã¥Ã°Ã¥Ã¤Ã¨\n";
         MyThread thread(clientQueue.front(),0);
         clientQueue.pop();
     }
@@ -60,9 +60,9 @@ void MyThread::Start(int _numberProduct, int NameClient)
 {
     Shop::SumJopTimeCassa += _numberProduct * Shop::speedProcessing;
     Shop::CountJopCassa++;
-    std::cout << "Client " << NameClient << " Îáðàáîòêà\n";
+    std::cout << "Client " << NameClient << " ÃŽÃ¡Ã°Ã Ã¡Ã®Ã²ÃªÃ \n";
     std::this_thread::sleep_for(std::chrono::milliseconds(_numberProduct*Shop::speedProcessing));
-    std::cout << "Client " << NameClient << " Îáñëóæåí\n";
+    std::cout << "Client " << NameClient << " ÃŽÃ¡Ã±Ã«Ã³Ã¦Ã¥Ã­\n";
     Shop::NumbetThread--;
     Shop::NextClient();
 }
