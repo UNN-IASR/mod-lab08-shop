@@ -43,7 +43,6 @@ void Shop::run(){
     while (this->customersVisited < this->customers){
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
         if (this->queue.size() != 0){
-            std::cout << "tack" << std::endl;
             for (int i = 0; i < isBusy.size(); i++){
                 if (!isBusy[i]) {
                     rm.lock();
