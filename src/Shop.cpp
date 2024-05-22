@@ -1,3 +1,4 @@
+// Copyright 2024 MISha
 #include "../include/Shop.h"
 #include <thread>
 #include <iostream>
