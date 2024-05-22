@@ -1,5 +1,4 @@
-﻿// Магазин.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+// Copyright 2024 MISha
 #include "../include/Shop.h"
 #include <iostream>
 #include <thread>
