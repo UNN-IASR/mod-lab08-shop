@@ -41,6 +41,7 @@ void Shop::run(){
     std::mutex rm;
     this->statistic.openCash(this->cash);
     std::thread incoming (&Shop::incomingCustomers, this);
+    std::cout << "incoming flow working" << std::endl;
     while (this->customersVisited < this->customers){
         if (!this->queue.empty()){
             for (int i = 0; i < isBusy.size(); i++){
