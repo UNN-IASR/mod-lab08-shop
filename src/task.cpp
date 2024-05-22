@@ -45,7 +45,7 @@ void Shop::run(){
     while (this->customersVisited < this->customers){
         std::cout << "tick" << std::endl;
         if (!this->queue.empty()){
-            std::cout << "tack";
+            std::cout << "tack" << std::endl;
             for (int i = 0; i < isBusy.size(); i++){
                 if (!isBusy[i]) {
                     rm.lock();
