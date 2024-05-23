@@ -11,6 +11,13 @@ class Shop_working;
 class Buyer;
 class Shop;
 
+struct cash_reg_stat {
+    bool is_use;
+    int downtime;
+    int work_time;
+    std::chrono::system_clock::time_point prev_time;
+};
+
 class Shop {
     private:
         int num_of_sales_reg;
@@ -21,20 +28,26 @@ class Shop {
         std::mutex mtx_shop;
         std::condition_variable noty;
         std::vector<std::thread> all_buyers;
+        std::vector<int> stat_queue;
+        std::vector<int> stat_time_for_buyer;
+        std::vector<int> stat_time_for_work_cash_reg;
+        std::vector<cash_reg_stat> cash_reg_statistics;
     public:
         int requestCount = 0;
         int processedCount = 0;
         int rejectedCount = 0;
         Shop (int num, int cash_register_intensity, int queue_size);
-        void Processing(Buyer buyer);
+        void Processing(Buyer& buyer);
         void Work_in_thread(Buyer buyer);
         void Work_in_queue_thread(Buyer buyer);
+        void Get_stat();
         void Join();
 };
 
 
 class Shop_working {
     private:
+        std::vector<Buyer> buyers;
         std::unique_ptr<Shop> shop;
         int max_capacity_cart;
         int buyer_delay;
@@ -52,6 +65,7 @@ class Buyer {
         int cap_shopping_cart;
         static inline int count_id = 0;
     public:
+        int processing_time;
         Buyer() {};
         Buyer(int max_capacity_cart);
         int Get_size_Cart() {
