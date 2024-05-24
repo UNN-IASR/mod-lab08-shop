@@ -4,7 +4,7 @@
 TEST(TestCaseName, Test1) {
     Shop shop(10, 40, 0.5, 9, 6);
     shop.Processing();
-    int result = shop.serviced_customers + shop.unserviced_customers;
+    int result = shop.serviced_customers + shop.unservesed_customers;
     EXPECT_EQ(result, 40);
 }
 TEST(TestCaseName, Test4) {
