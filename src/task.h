@@ -65,7 +65,6 @@ class Buyer {
         int cap_shopping_cart;
         static inline int count_id = 0;
     public:
-        int processing_time;
         Buyer() {};
         Buyer(int max_capacity_cart);
         int Get_size_Cart() {
