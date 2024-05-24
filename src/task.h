@@ -53,7 +53,7 @@ class Shop_working {
         int buyer_delay;
     public:
         Shop_working(int num_of_sales_reg, int buyers_intensity,
-                     int cash_reg_speed, int max_capacity_cart,
+                     int cash_reg_speed, int avg_capacity_cart,
                      int max_queue_size);
         void Start_sim(int num_of_buyers);
 };

@@ -3,9 +3,11 @@
 Buyer::Buyer(int max_capacity_cart) {
     count_id++;
     id = count_id;
+    int max = max_capacity_cart+max_capacity_cart/2;
+    int min = max_capacity_cart-max_capacity_cart/2;
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dist(1, max_capacity_cart);
+    std::uniform_int_distribution<> dist(min,max);
     cap_shopping_cart = dist(gen);
 }
 
@@ -125,13 +127,18 @@ void Shop::Get_stat() {
         work_time+=cash_reg_statistics[i].work_time;
         downtime+=cash_reg_statistics[i].downtime;
     }
-    
+    double stat = buyers_time_sum*1.0/stat_time_for_buyer.size();
     std::cout << "Customers have been served: " << processedCount << std::endl;
     std::cout << "Customers are not served:   " << rejectedCount << std::endl;
     std::cout << "Average queue length:       " << sum_queue*1.0/stat_queue.size() << std::endl;
-    std::cout << "Average buyer service time: " << buyers_time_sum*1.0/stat_time_for_buyer.size() << std::endl;
+    std::cout << "Average buyer service time: " << stat << std::endl;
     std::cout << "Average cash reg work time: " << work_time*1.0/num_of_sales_reg << std::endl;
     std::cout << "Average cash reg downtime:  " << downtime*1.0/num_of_sales_reg << std::endl;
+    std::cout << std::endl;
+    std::cout << "By modeling:" << std::endl;
+    std::cout << "Probability of failure: " << rejectedCount*1.0/requestCount << std::endl;
+    std::cout << "Relative throughput:    " << processedCount*1.0/requestCount << std::endl;
+    std::cout << "Absolute bandwidth:     " << (1000/stat)*num_of_sales_reg << std::endl;
 
 }
 
