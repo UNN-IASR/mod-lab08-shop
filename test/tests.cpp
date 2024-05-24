@@ -4,7 +4,7 @@
 TEST(Test, Test1) {
     Shop shop(5, 19, 0.2, 5, 4);
     shop.start_work();
-    EXPECT_EQ(shop.client_served + shop.client_unserved, 19);
+    EXPECT_EQ(shop.clients_served + shop.clients_unserved, 19);
 }
 
 TEST(Test, Test2) {
