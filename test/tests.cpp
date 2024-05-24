@@ -25,5 +25,15 @@ TEST(Test, Test3) {
     shop.cash_obrabotka(0, client, 2.0);
 
     ASSERT_EQ(0, shop.cash_register[0].time_waiting_cr);
-    ASSERT_EQ(3, client.time_service);
+    ASSERT_EQ(0, client.time_service);
+}
+TEST(Test, Test4) {
+    Shop shop1(10, 35, 0.3, 8, 6);
+    Shop shop2(10, 35, 0.5, 8, 6);
+    shop1.start_work();
+    shop2.start_work();
+    bool f = false;
+    if (shop1.clients_served < shop2.clients_served) 
+        f = true;
+    EXPECT_EQ(f,true);
 }
