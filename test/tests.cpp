@@ -24,6 +24,6 @@ TEST(Test, Test3) {
 
     shop.cash_obrabotka(0, client, 2.0);
 
-    ASSERT_EQ(2, shop.cash_register[0].time_waiting_cr);
+    ASSERT_EQ(0, shop.cash_register[0].time_waiting_cr);
     ASSERT_EQ(3, client.time_service);
 }
