@@ -4,7 +4,7 @@
 TEST(TestCaseName, Test1) {
     Shop shop(10, 40, 0.5, 9, 6);
     shop.Processing();
-    int result = shop.served_customers + shop.unserved_customers;
+    int result = shop.serviced_customers + shop.unserviced_customerss;
     EXPECT_EQ(result, 40);
 }
 TEST(TestCaseName, Test4) {
@@ -13,7 +13,7 @@ TEST(TestCaseName, Test4) {
     shop1.Processing();
     shop2.Processing();
     bool flag = true;
-    if (shop1.served_customers > shop2.served_customers) flag = false;
+    if (shop1.serviced_customers > shop2.serviced_customers) flag = false;
     EXPECT_EQ(flag, true);
 }
 
