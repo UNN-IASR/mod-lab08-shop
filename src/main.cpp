@@ -1,70 +1,65 @@
-#include "Customer.h"
-#include "CustomerSpawner.h"
-#include "Shop.h"
-#include "TimedCaller.h"
-#include "Calculator.h"
-#include <iostream>
+#include "task.h"
+#include <fstream>
+#include <math.h>
 
-int main()
-{
-	constexpr unsigned int checkoutCount = 2;
-	constexpr double arrivalRate = 5;
-	constexpr double serviceRate = 2;  // одного товара
-	constexpr double avgItemCount = 5;
-	constexpr unsigned int queueMaxLength = 5;
+int fac(int n) {
+    if (n == 0)
+        return 1;
+    else {
+        int result = 1;
+        for (int i = 1; i <= n; i++)
+            result = result * i;
+        return result;
+    }
+}
 
-	constexpr auto workDuration = std::chrono::seconds(30);
-	constexpr auto itemProcessDuration = std::chrono::duration_cast<milliseconds>(std::chrono::duration<double>(1 / serviceRate));
-	constexpr auto timeout = std::chrono::duration_cast<milliseconds>(std::chrono::duration<double>(1 / arrivalRate));
+int main() {
+    setlocale(0, "rus");
+    int num_checkouts = 2;
+    double lambda = 0.2;
+    int checkout_time_ms =10;
+    double mean_num_items = 3; 
+    int max_queue_length =5; 
+    task s(num_checkouts, lambda, checkout_time_ms, max_queue_length, mean_num_items);
+    s.startSimulation();
+    double temp = 0;
+    int z = 0;
+    int st = 0;
+    double mu = s.clients_served / s.total_time;
+    double ro = lambda / mu;
+    for (int i = 0; i <= num_checkouts + max_queue_length; i++) {
+        temp =temp+ pow(ro, i) / (pow(num_checkouts, st) * fac(z));
+        if (z < num_checkouts)z++;
+        else
+            st++;
+    }
+    
+    double P_0 = 1 / (temp*10);
+    double P_rej = pow(ro, num_checkouts + max_queue_length) * P_0 / (pow(num_checkouts, max_queue_length) * fac(num_checkouts));
+    double Q = 1 - P_rej;
+    double A = lambda * Q;
+    double L_q = (pow(ro, num_checkouts + 1) * (1 - pow(ro / num_checkouts, max_queue_length) * (1 + max_queue_length * (1 - ro / num_checkouts))) * P_0) / (num_checkouts * fac(num_checkouts) * pow(1 - ro / num_checkouts, 2));
+    double L_srv = A / mu;
+    double t = L_q / lambda + Q / mu;
+    double t_q = L_q / lambda;
+    // Вывод статистики
+    std::ofstream file("result.txt");
+    file << "Количество обслуженных покупателей: " << s.clients_served << std::endl;
+    file << "Количество отказов: " << s.rejected_clients << std::endl;
+    file << "Среднее время нахождения покупателя в очереди + на кассе: " << s.total_time / s.clients_served << " ms" << std::endl;
+    file << "Среднее время работы кассы: " << s.total_time / num_checkouts << " ms" << std::endl;
+    file << "Среднее время простоя кассы: " << s.idle_time / num_checkouts << " ms" << std::endl;
+    file << "Вероятность отказа: " << (double)s.rejected_clients/100 << std::endl;
+    file << "Относительная пропускная способность: " << (double)s.clients_served/100 << std::endl;
+    file << "Теоретические расчеты. " << std::endl;
 
+    file << "Вероятность отказа: " << P_rej << std::endl;
+    file << "Относительная пропускная способность: " << Q << std::endl;
+    file << "Абсолютная пропускная способность: " << A << std::endl;
+    file << "Среднее число заявок в очереди: " << L_q << std::endl;
+    
 
-	Shop shop(checkoutCount, itemProcessDuration, queueMaxLength);
-
-	std::random_device randomDevice;
-	CustomerSpawner spawner(
-		[&shop](const Customer& customer) {
-			shop.handleCustomer(std::make_shared<Customer>(customer));
-		},
-		randomDevice(),
-		avgItemCount,
-		3
-	);
-
-	TimedCaller caller{};
-	caller.Call(
-		[&spawner] { spawner.spawn(); },
-		workDuration,
-		timeout
-	);
-
-	shop.stopIfWorking();
-	auto data = shop.getData();
-
-	auto theoreticalStats = Calculator::calculateStats(
-		arrivalRate,
-		serviceRate * checkoutCount / avgItemCount,
-		checkoutCount,
-		queueMaxLength);
-	std::cout << "\nTHEORY:\n"
-	          << "rejection probability: " << theoreticalStats.rejectionProbability << '\n'
-	          << "relative throughput: " << theoreticalStats.relativeThroughput << '\n'
-	          << "absolute throughput: " << theoreticalStats.absoluteThroughput << '\n';
-
-	std::cout << "\nDATA:\n"
-	          << "rejected customer count: " << data.rejectedCustomerCount << '\n'
-	          << "accepted customer count: " << data.acceptedCustomerCount << '\n'
-	          << "avg queue length: " << (double) std::reduce(data.queueSizeSamples.begin(), data.queueSizeSamples.end()) / data.queueSizeSamples.size()  << '\n'
-	          << "avg client service time (queue + checkout): " << (data.totalWaitTime / data.acceptedCustomerCount).count() << "s\n"
-	          << "avg checkout work time: " << (data.actualWorkTimeAcrossCheckouts / checkoutCount).count() << "s\n"
-	          << "avg checkout idle time: " << ((data.totalOperationTimeAcrossCheckouts - data.actualWorkTimeAcrossCheckouts) / checkoutCount).count() << "s\n";
-
-	double actualArrivalRate = (double) (data.acceptedCustomerCount + data.rejectedCustomerCount) / workDuration.count();
-	double actualRejectionProbability = (double) data.rejectedCustomerCount / ( data.acceptedCustomerCount + data.rejectedCustomerCount );
-	double actualRelativeThroughput = 1 - actualRejectionProbability;
-	double actualAbsoluteThroughput = actualArrivalRate * actualRelativeThroughput;
-
-	std::cout << "\nACTUAL:\n"
-	          << "rejection probability: " << actualRejectionProbability << '\n'
-	          << "relative throughput: " << actualRelativeThroughput << '\n'
-	          << "absolute throughput: " << actualAbsoluteThroughput << '\n';
+    
+    file.close();
+    
 }

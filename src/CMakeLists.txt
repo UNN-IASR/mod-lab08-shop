@@ -1,20 +1,6 @@
 set(header_path "${${PROJECT_NAME}_SOURCE_DIR}/include")
-set(header
-		${header_path}/Customer.h
-		${header_path}/CustomerSpawner.h
-		${header_path}/Checkout.h
-		${header_path}/Shop.h
-		${header_path}/TimedCaller.h
-		${header_path}/Calculator.h
-		${header_path}/Math.h)
-set(src
-		Customer.cpp
-		CustomerSpawner.cpp
-		Checkout.cpp
-		Shop.cpp
-		TimedCaller.cpp
-		Calculator.cpp
-		Math.cpp)
+set(header ${header_path}/task.h)
+set(src task.cpp)
 
 
 

@@ -1,172 +1,115 @@
 // Copyright 2021 GHA Test Team
 #include <gtest/gtest.h>
-#include <gmock/gmock-matchers.h>
-#include "TimedCaller.h"
-#include "Math.h"
-#include "Calculator.h"
-#include "Customer.h"
-#include "CustomerSpawner.h"
-#include "Checkout.h"
-#include "Shop.h"
-
-using testing::Eq;
-using testing::Ne;
-using testing::Ge;
-using testing::Le;
-using testing::DoubleEq;
-using testing::DoubleNear;
-using testing::AnyOf;
-using testing::AllOf;
-
-//region TimedCaller Tests
-TEST(TimedCallerTests, worksAsExpected)
-{
-	int i = 0;
-
-	TimedCaller caller{};
-	caller.Call(
-		[&] { i++; },
-		std::chrono::seconds(10),
-		std::chrono::seconds(1)
-	);
-
-	EXPECT_THAT(i, Eq(10));
+#include <iostream>
+#include "task.h"
+int fac(int n) {
+	if (n == 0)
+		return 1;
+	else {
+		int result = 1;
+		for (int i = 1; i <= n; i++)
+			result = result * i;
+		return result;
+	}
 }
-//endregion
-
-//region Math Tests
-TEST(MathTests, factorialWorksAsExpected)
-{
-	EXPECT_THAT(Math::factorial(0), Eq(1));
-	EXPECT_THAT(Math::factorial(1), Eq(1));
-	EXPECT_THAT(Math::factorial(8), Eq(40320));
+TEST(TestCaseName1, TestName1) {
+	int num_checkouts = 2;
+	double lambda = 0.2;
+	int checkout_time_ms = 10;
+	double mean_num_items = 3;
+	int max_queue_length = 5;
+	task s(num_checkouts, lambda, checkout_time_ms, max_queue_length, mean_num_items);
+	s.startSimulation();
+	int sum = s.clients_served + s.rejected_clients;
+	EXPECT_EQ(sum, 100);
+	//EXPECT_TRUE(true);
 }
 
-TEST(MathTests, powWorksAsExpected)
-{
-	EXPECT_THAT(Math::pow(5u, 0), Eq(1));
-	EXPECT_THAT(Math::pow(5u, 1), Eq(5));
-	EXPECT_THAT(Math::pow(5u, 3), Eq(125));
+TEST(TestCaseName2, TestName2) {
+
+	int num_checkouts = 2;
+	double lambda = 0.2;
+	int checkout_time_ms = 10;
+	double mean_num_items = 3;
+	int max_queue_length = 5;
+	task s(num_checkouts, lambda, checkout_time_ms, max_queue_length, mean_num_items);
+	s.startSimulation();
+	bool flag = false;
+	double temp = 0;
+	int z = 0;
+	int st = 0;
+	double mu = s.clients_served / s.total_time;
+	double ro = lambda / mu;
+	for (int i = 0; i <= num_checkouts + max_queue_length; i++) {
+		temp = temp + pow(ro, i) / (pow(num_checkouts, st) * fac(z));
+		if (z < num_checkouts)z++;
+		else
+			st++;
+	}
+
+	double P_0 = 1 / (temp * 10);
+	double P_rej = pow(ro, num_checkouts + max_queue_length) * P_0 / (pow(num_checkouts, max_queue_length) * fac(num_checkouts));
+	if (P_0 < 1 && P_rej < 1)
+		flag = true;
+	
+	EXPECT_TRUE(flag);
 }
-//endregion
-
-//region Calculator Tests
-TEST(CalculatorTests, worksAsExpected)
-{
-	auto stats = Calculator::calculateStats(4, 2, 4, 4);
-
-	double rejectionProbabilityByHand = (double) 1 / 183;
-
-	EXPECT_THAT(stats.rejectionProbability, DoubleEq(rejectionProbabilityByHand));
-	EXPECT_THAT(stats.relativeThroughput, DoubleEq(1 - rejectionProbabilityByHand));
-	EXPECT_THAT(stats.absoluteThroughput, DoubleEq(4 * (1 - rejectionProbabilityByHand)));
+TEST(TestCaseName3, TestName3) {
+	int num_checkouts = 2;
+	double lambda = 0.2;
+	int checkout_time_ms = 10;
+	double mean_num_items = 3;
+	int max_queue_length = 100;
+	task s(num_checkouts, lambda, checkout_time_ms, max_queue_length, mean_num_items);
+	s.startSimulation();
+	int n = s.clients_served;
+	EXPECT_EQ(n, 100);
+	//EXPECT_TRUE(true);
 }
-//endregion
-
-//region Customer Tests
-TEST(CustomerTests, ctorCreatesExpectedObject)
-{
-	Customer customer(1, 5);
-
-	EXPECT_THAT(customer.getId(), Eq(1));
-	EXPECT_THAT(customer.getItemCount(), Eq(5));
+TEST(TestCaseName4, TestName4) {
+	int num_checkouts = 0;
+	double lambda = 0.2;
+	int checkout_time_ms = 10;
+	double mean_num_items = 3;
+	int max_queue_length = 7;
+	task s(num_checkouts, lambda, checkout_time_ms, max_queue_length, mean_num_items);
+	s.startSimulation();
+	EXPECT_EQ(s.clients_served, 0);
+	//EXPECT_TRUE(true);
 }
-//endregion
-
-//region CustomerSpawner Tests
-TEST(CustomerSpawnerTests, spawnWorksAsExpected)
-{
-	std::random_device randomDevice;
-
-	int customerCount = 0;
-
-	CustomerSpawner spawner(
-		[&](const Customer& customer) {
-			EXPECT_THAT(customer.getItemCount(), AllOf(Ge(2), Le(8)));
-			EXPECT_THAT(customer.getId(), Eq(customerCount));
-			customerCount++;
-		},
-		randomDevice(),
-		5,
-		3
-	);
-
-	spawner.spawn();
-	spawner.spawn();
-	spawner.spawn();
-	spawner.spawn();
-	spawner.spawn();
-
-	EXPECT_THAT(customerCount, Eq(5));
+TEST(TestCaseName5, TestName5) {
+	int num_checkouts = 5;
+	double lambda = 0.1;
+	int checkout_time_ms = 1;
+	double mean_num_items = 1;
+	int max_queue_length = 50;
+	task s(num_checkouts, lambda, checkout_time_ms, max_queue_length, mean_num_items);
+	s.startSimulation();
+	
+	EXPECT_EQ(s.rejected_clients, 0);
 }
-//endregion
-
-//region Checkout Tests
-TEST(CheckoutTests, scenario1)
-{
-	Checkout checkout(1, milliseconds(500));
-	auto operationBegin = std::chrono::steady_clock::now();
-	EXPECT_THAT(checkout.getId(), Eq(1));
-	EXPECT_THAT(checkout.isBusy(), Eq(false));
-
-	std::this_thread::sleep_for(std::chrono::milliseconds(2500));
-
-	auto workBegin = std::chrono::steady_clock::now();
-	checkout.serve(std::make_shared<Customer>(Customer(1, 5)));
-	EXPECT_THAT(checkout.isBusy(), Eq(true));
-
-	std::this_thread::sleep_for(std::chrono::milliseconds(2750));
-
-	EXPECT_THAT(checkout.isBusy(), Eq(false));
-	auto workEnd = std::chrono::steady_clock::now();
-
-	checkout.stopIfWorking();
-	auto operationEnd = std::chrono::steady_clock::now();
-
-	auto operationTime = std::chrono::duration_cast<duration<double>>(operationEnd - operationBegin);
-	auto workTime = std::chrono::duration_cast<duration<double>>(workEnd - workBegin);
-
-	EXPECT_THAT(operationTime.count(), DoubleNear(5.2, 0.2));
-	EXPECT_THAT(workTime.count(), AllOf(Ge(2), Le(3)));
+TEST(TestCaseName6, TestName6) {
+	int num_checkouts = 2;
+	double lambda = 0.1;
+	int checkout_time_ms = 100;
+	double mean_num_items = 7;
+	int max_queue_length = 7;
+	task s(num_checkouts, lambda, checkout_time_ms, max_queue_length, mean_num_items);
+	s.startSimulation();
+	bool flag = false;
+	if (s.rejected_clients > 0)
+		flag = true;
+	//EXPECT_EQ(sum, 100);
+	EXPECT_TRUE(flag);
 }
-//endregion
-
-//region Shop Tests
-TEST(ShopTests, scenario1)
-{
-	Shop shop(2, milliseconds(500), 2);
-	EXPECT_THAT(shop.isWorking(), Eq(true));
-
-	shop.stopIfWorking();
-
-	EXPECT_THAT(shop.isWorking(), Eq(false));
-
-	auto data = shop.getData();
-
-	EXPECT_THAT(data.rejectedCustomerCount, Eq(0));
-	EXPECT_THAT(data.acceptedCustomerCount, Eq(0));
+TEST(TestCaseName7, TestName7) {
+	int num_checkouts = 0;
+	double lambda = 0.1;
+	int checkout_time_ms = 100;
+	double mean_num_items = 7;
+	int max_queue_length = 7;
+	task s(num_checkouts, lambda, checkout_time_ms, max_queue_length, mean_num_items);
+	s.startSimulation();
+	int sum = s.clients_served;
+	EXPECT_EQ(sum, 0);
 }
-
-//TEST(ShopTests, scenario2)
-//{
-//	Shop shop(2, milliseconds(500), 2);
-//
-//	shop.handleCustomer(std::make_shared<Customer>(Customer(1, 5)));
-//	std::this_thread::sleep_for(milliseconds(100));
-//	shop.handleCustomer(std::make_shared<Customer>(Customer(2, 5)));
-//	std::this_thread::sleep_for(milliseconds(100));
-//	shop.handleCustomer(std::make_shared<Customer>(Customer(3, 5)));
-//	std::this_thread::sleep_for(milliseconds(100));
-//	shop.handleCustomer(std::make_shared<Customer>(Customer(4, 5)));
-//	std::this_thread::sleep_for(milliseconds(100));
-//	shop.handleCustomer(std::make_shared<Customer>(Customer(5, 5)));
-//
-//	shop.stopIfWorking();
-//
-//	auto data = shop.getData();
-//
-//	EXPECT_THAT(data.acceptedCustomerCount, Eq(4));
-//	EXPECT_THAT(data.rejectedCustomerCount, Eq(1));
-//	EXPECT_THAT((double) std::reduce(data.queueSizeSamples.begin(), data.queueSizeSamples.end()) / data.queueSizeSamples.size(), DoubleNear(1.8, 0.2));
-//}
-//endregion
