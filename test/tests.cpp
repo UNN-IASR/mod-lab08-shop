@@ -1,5 +1,20 @@
-// Copyright 2021 GHA Test Team
+#include "../include/task.h"
 #include <gtest/gtest.h>
-#include "task1.h"
-#include "task2.h"
-#include "task3.h"
+
+TEST(SupermarketTest, CustomerFlowRate) {
+    Supermarket supermarket(5, 10, 1, 10, 20);
+    supermarket.runSimulation(10); // Shorter simulation for test purposes
+
+    ASSERT_GT(supermarket.getCustomersServed(), 0);
+    ASSERT_GT(supermarket.getCustomersNotServed(), 0);
+}
+
+TEST(SupermarketTest, CashierWorkIdleTime) {
+    Supermarket supermarket(5, 10, 1, 10, 20);
+    supermarket.runSimulation(10); // Shorter simulation for test purposes
+
+    for (const auto& cashier : supermarket.getCashiers()) {
+        ASSERT_GT(cashier->getTotalWorkTime(), 0);
+        ASSERT_GT(cashier->getTotalIdleTime(), 0);
+    }
+}
