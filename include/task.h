@@ -45,6 +45,10 @@ public:
     void printStatistics() const;
     void printTheoreticalValues() const;
 
+    int getCustomersServed() const;
+    int getCustomersNotServed() const;
+    const std::vector<std::unique_ptr<Cashier>>& getCashiers() const;
+
 private:
     std::vector<std::unique_ptr<Cashier>> cashiers;
     std::queue<Customer> customer_queue;

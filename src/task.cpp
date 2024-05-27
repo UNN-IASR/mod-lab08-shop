@@ -172,3 +172,15 @@ void Supermarket::printTheoreticalValues() const {
     cout << "Относительная пропускная способность (теоретическая): " << Q << endl;
     cout << "Абсолютная пропускная способность (теоретическая): " << A << " покупателей в секунду" << endl;
 }
+
+int Supermarket::getCustomersServed() const {
+    return customers_served;
+}
+
+int Supermarket::getCustomersNotServed() const {
+    return customers_not_served;
+}
+
+const std::vector<std::unique_ptr<Cashier>>& Supermarket::getCashiers() const {
+    return cashiers;
+}
