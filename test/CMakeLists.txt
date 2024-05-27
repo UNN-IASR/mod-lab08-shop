@@ -1,11 +1,22 @@
-add_executable(${PROJECT_NAME}.test
-  AllTests.cpp
-  tests.cpp)
+cmake_minimum_required(VERSION 3.10)
+project(SupermarketSimulation)
 
-target_link_libraries(${PROJECT_NAME}.test
-  ${PROJECT_NAME}_1 ${PROJECT_NAME}_2 ${PROJECT_NAME}_3 gtest pthread)
-target_compile_definitions(${PROJECT_NAME}.test 
-  PRIVATE TEST_DIR="${CMAKE_CURRENT_LIST_DIR}/test")
+set(CMAKE_CXX_STANDARD 17)
 
-install(TARGETS ${PROJECT_NAME}.test
-        DESTINATION "${tool_dest}")
+# Add include directory
+include_directories(include)
+
+# Add source files
+add_executable(main src/main.cpp src/task.cpp)
+
+# Add Google Test
+enable_testing()
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+
+# Add test executable
+add_executable(tests test/tests.cpp src/task.cpp)
+target_link_libraries(tests ${GTEST_LIBRARIES} pthread)
+
+# Enable tests
+add_test(AllTests tests)
