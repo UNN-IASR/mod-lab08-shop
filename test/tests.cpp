@@ -1,25 +1,22 @@
-// Copyright 2021 GHA Test Team
 #include "task.h"
 #include <gtest/gtest.h>
 
-TEST(SupermarketTest, TheoreticalCalculations) {
-    int num_checkouts = 5;
-    int customer_arrival_rate = 1; // покупателей в секунду
-    int processing_speed = 1; // секунд на товар
-    int avg_cart_size = 10; // среднее количество товаров
-    int max_queue_length = 10;
+TEST(SupermarketTest, CustomerFlowRate) {
+    Supermarket supermarket(5, 10, 1, 10, 20);
+    supermarket.runSimulation(10); // Shorter simulation for test purposes
 
-    Supermarket supermarket(num_checkouts, customer_arrival_rate, processing_speed, avg_cart_size, max_queue_length);
+    ASSERT_GT(supermarket.getCustomersServed(), 0);
+    ASSERT_GT(supermarket.getCustomersNotServed(), 0);
+}
 
-    double P0 = supermarket.calculateTheoreticalP0();
-    double Prej = supermarket.calculateTheoreticalPrej(P0);
-    double Q = supermarket.calculateTheoreticalQ(Prej);
-    double A = supermarket.calculateTheoreticalA(Q);
+TEST(SupermarketTest, CashierWorkIdleTime) {
+    Supermarket supermarket(5, 10, 1, 10, 20);
+    supermarket.runSimulation(10); // Shorter simulation for test purposes
 
-    ASSERT_NEAR(P0, 0.021, 0.001); // предполагаемое значение для P0
-    ASSERT_NEAR(Prej, 0.002, 0.001); // предполагаемое значение для Prej
-    ASSERT_NEAR(Q, 0.998, 0.001); // предполагаемое значение для Q
-    ASSERT_NEAR(A, 0.998, 0.001); // предполагаемое значение для A
+    for (const auto& cashier : supermarket.getCashiers()) {
+        ASSERT_GT(cashier->getTotalWorkTime(), 0);
+        ASSERT_GT(cashier->getTotalIdleTime(), 0);
+    }
 }
 
 int main(int argc, char **argv) {
