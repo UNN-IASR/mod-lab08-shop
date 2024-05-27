@@ -1,4 +1,4 @@
-#include "task.h"
+#include "../include/task.h"
 #include <gtest/gtest.h>
 
 TEST(SupermarketTest, CustomerFlowRate) {
