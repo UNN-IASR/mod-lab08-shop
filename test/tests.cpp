@@ -65,6 +65,6 @@ TEST(shop, RejectedClients_3) {
     s.Produce(100);
     
     bool better = true;
-    if ((double)s.RejectedClients / 100 > 0) better = false;
+    if (s.ServedClients > s.RejectedClients) better = false;
     EXPECT_EQ(better, true);
 }
