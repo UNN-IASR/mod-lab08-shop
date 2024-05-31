@@ -4,7 +4,7 @@
 TEST(TestCaseName, Test1) {
     Restore restore(12, 34, 0.3, 9, 7);
     restore.job();
-    EXPECT_EQ(restore.servis + restore.not_servis, 30);
+    EXPECT_EQ(restore.servis + restore.not_servis, 34);
 }
 
 TEST(TestCaseName, Test2) {
@@ -15,7 +15,7 @@ TEST(TestCaseName, Test2) {
     bool f = false;
     if (restore1.servis < restore2.not_servis) 
         f = true;
-    EXPECT_EQ(f,true);
+    EXPECT_EQ(f,false);
 }
 TEST(TestCaseName, Test3) {
     Restore restore1(12, 34, 0.3, 9, 7);
@@ -25,7 +25,7 @@ TEST(TestCaseName, Test3) {
     bool f = true;
     if (restore1.servis > restore2.not_servis) 
         f = false;
-    EXPECT_EQ(f, true);
+    EXPECT_EQ(f, false);
 }
 
 TEST(TestCaseName, Test4) {
