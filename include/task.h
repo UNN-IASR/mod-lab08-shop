@@ -1,60 +1,60 @@
 #pragma once
 #include <thread>
 #include <mutex>
+#include <cmath>
 #include <vector>
 #include <chrono>
 #include <list>
-#include <cmath>
 
-class Cli{
+class Client {
 public:
 	int issues;
-	int expect;
+	int wait;
 	int serve;
-	std::chrono::system_clock::time_point deque;
+	std::chrono::system_clock::time_point queue;
 };
 
-class Basket{
+class Basket {
 public:
-	int count;
-	double process;
-	double keep;
+	int num;
+	double job;
+	double wait;
 	std::chrono::system_clock::time_point begin;
 	bool f;
 };
 
 class Restore {
 public:
-	int num;
+	int cassa;
 	double intens;
 	double v;
-	double aver;
+	double middle;
 	int len;
 
-	std::mutex mute;
+	std::mutex mut;
 
-	std::list<Cli> queue;
+	std::list<Client> que;
 	std::vector<Basket> basket;
-	std::vector<std::thread*> thr;
+	std::vector<std::thread*> thread;
 
-	Restore(int _num, double _intens, double _v, double _aver, int _len);
-	void cassa(int name, Cli cli, double speed);
+	Restore(int count, double _intens, double _v, double _aver, int _lenght);
+	void cass(int name, Client cust, double v);
 	void job();
-	void stats();
+	void statisi();
 
-	std::chrono::system_clock::time_point clock;
-	int watch;
+	std::chrono::system_clock::time_point t;
+	int clock;
 
-	int ready;
-	int unready;
+	int servis;
+	int not_servis;
 
-	double middle;
+	double aver;
 	double expecting;
-	double servis;
+	double serving;
 	double worked;
 	double waited;
 
 	double can;
-	double skip;
-	double miss;
+	double o;
+	double a;
 };
