@@ -3,8 +3,9 @@
 
 int main()
 {
-    Restore restore(8, 40, 0.25, 7, 5);
+    Restore restore(8, 32, 0.25, 9, 7);
     restore.job();
-    restore.stats();
+    restore.statisi();
+
     return 0;
 }
