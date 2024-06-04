@@ -35,6 +35,6 @@ TEST(TestCaseName, Test4) {
 TEST(TestCaseName, Test5) {
     Store store1(5, 10, 0.1, 10, 10);
     store1.Run();
-    var answer = store.queue.size();
+    int answer = store.queue.size();
     EXPECT_EQ(answer, 0);
 }
