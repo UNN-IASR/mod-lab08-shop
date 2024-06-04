@@ -27,18 +27,18 @@ Store::Store(int count, double intensity, double speed, double avg, int len) {
 	}
 }
 
-void Store::Reg(int _name, Client _client, double _v) {
+void Store::Reg(int name, Client client, double v) {
 	std::unique_lock<std::mutex> mute(mut);
 
-	basket[_name].wait += std::chrono::duration_cast<std::chrono::milliseconds>
-		(std::chrono::system_clock::now() - basket[_name].begin).count();
-	basket[_name].job += _client.issues / _v;
-	_client.serve = (int)(_client.issues / _v);
+	basket[name].wait += std::chrono::duration_cast<std::chrono::milliseconds>
+		(std::chrono::system_clock::now() - basket[name].begin).count();
+	basket[name].job += client.issues / v;
+	client.serve = (int)(client.issues / v);
 
-	std::this_thread::sleep_for(std::chrono::milliseconds((int)(_client.issues / _v)));
+	std::this_thread::sleep_for(std::chrono::milliseconds((int)(client.issues / v)));
 
-	basket[_name].begin = std::chrono::system_clock::now();
-	basket[_name].f = true;
+	basket[name].begin = std::chrono::system_clock::now();
+	basket[name].f = true;
 
 	mute.unlock();
 }
