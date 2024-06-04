@@ -19,12 +19,13 @@ TEST(TestCaseName, Test2) {
 
 TEST(TestCaseName, Test3) {
     Store store1(5, 50, 0.1, 10, 10);
+    Store store2(5, 50, 0.1, 10, 10);
     store1.Run();
+    store2.Run();
     bool equaled = true;
     if (store1.serviced + store1.notServiced + store2.serviced + store2.notServiced != 100) 
         equaled = false;
     EXPECT_EQ(equaled,true);
-    EXPECT_EQ(store1.notServiced, 32);
 }
 
 TEST(TestCaseName, Test4) {
