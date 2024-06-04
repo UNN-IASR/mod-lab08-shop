@@ -1,5 +1,5 @@
 // Copyright 2021 GHA Test Team
-#include "task.h"
+#include "../include/task.h"
 
 TEST(TestCaseName, Test1) {
     Store store(5, 50, 0.1, 10, 10);
