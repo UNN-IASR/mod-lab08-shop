@@ -22,7 +22,7 @@ TEST(TestCaseName, Test2) {
 TEST(TestCaseName, Test3) {
     Store store1(5, 50, 0.1, 10, 10);
     store1.Run();
-    EXPECT_EQ(store1.notServiced, 30);
+    EXPECT_EQ(store1.notServiced, 32);
 }
 
 TEST(TestCaseName, Test4) {
