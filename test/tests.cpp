@@ -34,5 +34,5 @@ TEST(TestCaseName, Test4) {
 TEST(TestCaseName, Test5) {
     Store store1(5, 10, 0.1, 10, 10);
     store1.Run();
-    EXPECT_EQ(store1.queue.Count, 0);
+    EXPECT_EQ(store1.queue.size(), 0);
 }
