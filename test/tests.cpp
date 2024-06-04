@@ -22,19 +22,17 @@ TEST(TestCaseName, Test2) {
 TEST(TestCaseName, Test3) {
     Store store1(5, 50, 0.1, 10, 10);
     store1.Run();
-    int ans = store.notServiced;
-    EXPECT_EQ(ans, 30);
+    EXPECT_EQ(store1.notServiced, 30);
 }
 
 TEST(TestCaseName, Test4) {
     Store store1(5, 10, 0.1, 10, 10);
     store1.Run();
-    EXPECT_EQ(store.notServiced, 0);
+    EXPECT_EQ(store1.notServiced, 0);
 }
 
 TEST(TestCaseName, Test5) {
     Store store1(5, 10, 0.1, 10, 10);
     store1.Run();
-    int answer = store.queue.Count;
-    EXPECT_EQ(answer, 0);
+    EXPECT_EQ(store1.queue.Count, 0);
 }
