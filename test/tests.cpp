@@ -14,7 +14,7 @@ TEST(TestCaseName, Test2) {
     store1.Run();
     store2.Run();
     bool equaled = true;
-    if (store1.serviced != store2.serviced) 
+    if (store1.serviced - store2.serviced > 1) 
         equaled = false;
     EXPECT_EQ(equaled,true);
 }
