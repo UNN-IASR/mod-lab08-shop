@@ -1,4 +1,4 @@
-#include "task.h"
+#include "../include/task.h"
 
 Store::Store(int count, double intensity, double speed, double avg, int len) {
 	this->registerAmount = count;
