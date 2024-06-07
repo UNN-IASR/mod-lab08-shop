@@ -20,4 +20,35 @@ TEST(shop, produce_clientRejected) {
     EXPECT_EQ(1, s.RejectedClients);
 }
 
+TEST(shop, Clients) {
+    Shop s(1, 1000, 1, 1, 1);
+    shop.Produce(200);
+    int result = s.RejectedClients + s.ServeredClients;
+    EXPECT_EQ(result, 200);
+}
 
+TEST(shop, produce_clientServered) {
+    Shop s(1, 1000, 1, 1, 1);
+    shop.Produce(100);
+    EXPECT_EQ(1, s.ServeredClients);
+}
+
+TEST(shop, ComparisonRejected) {
+    Shop s1(10, 10, 5, 1000, 8);
+    Shop s2(10, 10, 10, 1000, 8);
+    s1.Produce(100);
+    s2.Produce(100);
+    bool flag = true;
+    if (s1.RejectedClients > s2.RejectedClients) flag = false;
+    EXPECT_EQ(flag, true);
+}
+
+TEST(shop, ComparisonServered) {
+    Shop s1(10, 10, 5, 1000, 8);
+    Shop s2(10, 10, 10, 1000, 8);
+    s1.Produce(100);
+    s2.Produce(100);
+    bool flag = true;
+    if (s1.ServeredClients < s2.ServeredClients) flag = false;
+    EXPECT_EQ(flag, true);
+}
