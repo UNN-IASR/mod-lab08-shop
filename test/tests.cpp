@@ -23,14 +23,14 @@ TEST(shop, produce_clientRejected) {
 TEST(shop, Clients) {
     Shop shop(1, 1000, 1, 1, 1);
     shop.Produce(200);
-    int result = s.RejectedClients + s.ServedClients;
+    int result = shop.RejectedClients + shop.ServedClients;
     EXPECT_EQ(result, 200);
 }
 
 TEST(shop, produce_clientServered) {
     Shop shop(1, 1000, 1, 1, 1);
     shop.Produce(100);
-    EXPECT_EQ(1, s.ServedClients);
+    EXPECT_EQ(1, shop.ServedClients);
 }
 
 TEST(shop, ComparisonRejected) {
