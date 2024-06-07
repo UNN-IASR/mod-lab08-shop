@@ -23,6 +23,7 @@ TEST(shop, produce_clientRejected) {
 TEST(shop, Clients) {
     Shop shop(1, 1000, 1, 1, 1);
     shop.Produce(200);
+    shop.Consume();
     int result = shop.RejectedClients + shop.ServedClients;
     EXPECT_EQ(result, 200);
 }
@@ -30,6 +31,7 @@ TEST(shop, Clients) {
 TEST(shop, produce_clientServered) {
     Shop shop(1, 1000, 1, 1, 1);
     shop.Produce(100);
+    shop.Consume();
     EXPECT_EQ(1, shop.ServedClients);
 }
 
