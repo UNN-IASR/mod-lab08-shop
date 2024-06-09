@@ -12,7 +12,7 @@ TEST(TestCaseName, Test2) {
     Store store1(5, 50, 0.1, 10, 10);
     store1.Run();
     bool equaled = true;
-    if (store1.notServiced < 25) 
+    if (store1.notServiced > 10) 
         equaled = false;
     EXPECT_EQ(equaled,true);
 }
