@@ -1,6 +1,5 @@
 #pragma once
 #include <thread>
-#include <mutex>
 #include <cmath>
 #include <vector>
 #include <chrono>
@@ -20,7 +19,7 @@ public:
 	double job;
 	double wait;
 	std::chrono::system_clock::time_point begin;
-	bool f;
+	bool finished;
 };
 
 class Store {
@@ -30,8 +29,6 @@ public:
 	double speed;
 	double avg;
 	int len;
-
-	std::mutex mut;
 
 	std::list<Client> queue;
 	std::vector<Basket> basket;
@@ -45,16 +42,15 @@ public:
 	std::chrono::system_clock::time_point t;
 	int clock;
 
+	double worked;
+	double waited;
+
 	int serviced;
 	int notServiced;
 
 	double realAvg;
 	double expect;
 	double serving;
-	double worked;
-	double waited;
+	double canceled;
 
-	double can;
-	double o;
-	double a;
 };
