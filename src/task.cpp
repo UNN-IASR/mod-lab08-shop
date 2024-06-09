@@ -6,6 +6,22 @@ Store::Store(int count, double intensity, double speed, double avg, int len) {
 	this->speed = speed;
 	this->avg = avg;
 	this->len = len;
+
+	basket = std::vector<Basket>();
+
+	//заполняем начальное состояние корзины
+	for (int i = 0; i < registerAmount; i++) {
+		basket.push_back(Basket());
+		basket[i].amount = i;
+		basket[i].job = 0;
+		basket[i].wait = 0;
+		basket[i].finished = true;
+		basket[i].begin = std::chrono::system_clock::now();
+	}
+
+	queue = std::list<Client>();
+	thread = std::vector<std::thread*>();
+
 	clock = 0;
 	serviced = 0;
 	notServiced = 0;
@@ -13,34 +29,23 @@ Store::Store(int count, double intensity, double speed, double avg, int len) {
 	expect = 0;
 	serving = 0;
 
-	queue = std::list<Client>();
-	basket = std::vector<Basket>();
-	thread = std::vector<std::thread*>();
-
-	for (int i = 0; i < registerAmount; i++) {
-		basket.push_back(Basket());
-		basket[i].amount = i;
-		basket[i].job = 0;
-		basket[i].wait = 0;
-		basket[i].f = true;
-		basket[i].begin = std::chrono::system_clock::now();
-	}
 }
 
 void Store::Reg(int name, Client client, double v) {
-	std::unique_lock<std::mutex> mute(mut);
 
-	basket[name].wait += std::chrono::duration_cast<std::chrono::milliseconds>
-		(std::chrono::system_clock::now() - basket[name].begin).count();
+	basket[name].wait += std::chrono::duration_cast
+									<std::chrono::milliseconds>
+									(std::chrono::system_clock::now() - basket[name].begin).count();
+
 	basket[name].job += client.issues / v;
 	client.serve = (int)(client.issues / v);
 
-	std::this_thread::sleep_for(std::chrono::milliseconds((int)(client.issues / v)));
+	std::this_thread::sleep_for
+					(std::chrono::milliseconds((int)(client.issues / v)));
 
 	basket[name].begin = std::chrono::system_clock::now();
-	basket[name].f = true;
+	basket[name].finished = true;
 
-	mute.unlock();
 }
 
 void Store::Run() {
@@ -72,8 +77,8 @@ void Store::Run() {
 		}
 
 		for (int i = 0; i < registerAmount; i++) {
-			if ((queue.size() > 0) && (basket[i].f == true)) {
-				basket[i].f = false;
+			if ((queue.size() > 0) && (basket[i].finished == true)) {
+				basket[i].finished = false;
 				queue.front().wait = std::chrono::duration_cast<std::chrono::milliseconds>
 					(std::chrono::system_clock::now() - queue.front().await).count();
 
@@ -86,14 +91,12 @@ void Store::Run() {
 				queue.pop_front();
 			}
 		}
-		if (queue.empty() && nums == intensity)
-			break;
+		if (queue.empty() && nums == intensity)		break;
 	}
-	for (auto& th : thread)
-		th->join();
+	for (auto& th : thread)		th->join();
 
 	clock = std::chrono::duration_cast<std::chrono::microseconds>
-		(std::chrono::system_clock::now() - t).count();
+										(std::chrono::system_clock::now() - t).count();
 }
 
 void Store::Statistics() {
@@ -106,17 +109,10 @@ void Store::Statistics() {
 	}
 
 	realAvg = realAvg / intensity;
-	expect = expect / intensity;
 	serving = serving / intensity;
 
 	worked = worked / registerAmount;
 	waited = waited / registerAmount;
 
-	double l = intensity / clock;
-	double m = (double)serviced / clock;
-	double p = l / m;
-
-	can = notServiced / intensity;
-	o = 1.0 - can;
-	a = l * o;
+	canceled = notServiced / intensity;
 }
