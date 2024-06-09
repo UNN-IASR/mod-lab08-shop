@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include "task.h"
+#include "cashier.h"
 #include <thread>
 #include <chrono>
 #include <iostream>
