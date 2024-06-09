@@ -6,7 +6,7 @@
 #include <vector>
 #include <iostream>
 #include "task.h"
-#include "cashier.h"
+#include "cashier.cpp"
 
 task::task(
     int _channelsCount,
