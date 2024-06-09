@@ -6,6 +6,7 @@
 #include <vector>
 #include <iostream>
 #include "task.h"
+#include "cashier.h"
 
 task::task(
     int _channelsCount,
@@ -26,8 +27,8 @@ task::task(
     currClients = 0;
     for (int i = 0; i < channelsCount; i++)
     {
-        cashier c(i, channelPool, productSpeed,&currClients);
-        channels.push_back(c);
+        
+        channels.push_back(cashier(i, channelPool, productSpeed,&currClients));
         Qsize.push_back(channels[i].q->size());
         channels[i].stop = &currClients;
     }
